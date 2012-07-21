@@ -16,25 +16,10 @@
 #
 import webapp2
 import os
-import json
-import oauth2
-import urllib
-import urllib2
-import logging
+from yelp import yelp
 from google.appengine.ext.webapp import template
 
 TEMPLATES_DIR = 'templates'
-
-SCOPE = 'https://www.googleapis.com/auth/userinfo.email'
-HOST = 'api.yelp.com'
-PATH = '/v2/search'
-CONSUMER_KEY = 'eHr2SL2LJYafgwfwP22NoQ'
-CONSUMER_SECRET = 'yKepW4_EPYfeE7dU4viGI1u2LDw'
-TOKEN = '8JkZ4i4f0pdoBaSOnQ5ruKxXRQGXHnve'
-TOKEN_SECRET = 'aGQBDoS33Cm6VipOeCLVRVM31s4'
-url_params = {}
-url_params['location'] = 'sf'
-url_params['term'] = 'bar'
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -42,41 +27,11 @@ class MainHandler(webapp2.RequestHandler):
     	index_file = os.path.join(TEMPLATES_DIR, 'index.html')
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
-        answer = self.yelp(HOST, PATH, url_params, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
+        current_location = '37.7726402, -122.4099154'
+        location = ''
+        term = 'ice cream'
+        answer = yelp(self, current_location, location, term)
         self.response.out.write(answer)
-        
-    def yelp(self, host, path, url_params, consumer_key, consumer_secret, token, token_secret):
-        """Returns response for API request."""
-        # Unsigned URL
-        encoded_params = ''
-        if url_params:
-            encoded_params = urllib.urlencode(url_params)
-        url = 'http://%s%s?%s' % (host, path, encoded_params)
-        logging.info('URL: %s' % (url,))
-                
-        # Sign the URL
-        consumer = oauth2.Consumer(consumer_key, consumer_secret)
-        oauth_request = oauth2.Request('GET', url, {})
-        oauth_request.update({'oauth_nonce': oauth2.generate_nonce(),
-                              'oauth_timestamp': oauth2.generate_timestamp(),
-                              'oauth_token': token,
-                              'oauth_consumer_key': consumer_key})
-
-        token = oauth2.Token(token, token_secret)
-        oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
-        signed_url = oauth_request.to_url()
-        logging.info('Signed URL: %s\n' % (signed_url,))
-
-        # Connect
-        try:
-            conn = urllib2.urlopen(signed_url, None)
-            try:
-                response = json.loads(conn.read())
-            finally:
-                conn.close()
-        except urllib2.HTTPError, error:
-            response = json.loads(error.read())
-        return response
 
 app = webapp2.WSGIApplication([('/', MainHandler)],
                               debug=True)
