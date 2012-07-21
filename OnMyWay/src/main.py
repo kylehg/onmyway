@@ -15,11 +15,15 @@
 # limitations under the License.
 #
 import webapp2
+import os
 import json
 import oauth2
 import urllib
 import urllib2
 import logging
+from google.appengine.ext.webapp import template
+
+TEMPLATES_DIR = 'templates'
 
 SCOPE = 'https://www.googleapis.com/auth/userinfo.email'
 HOST = 'api.yelp.com'
@@ -35,6 +39,9 @@ url_params['term'] = 'bar'
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
+    	index_file = os.path.join(TEMPLATES_DIR, 'index.html')
+        index_template = template.render(index_file, {})
+        self.response.out.write(index_template)
         answer = self.yelp(HOST, PATH, url_params, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
         self.response.out.write(answer)
         
