@@ -27,11 +27,12 @@ class MainHandler(webapp2.RequestHandler):
     	index_file = os.path.join(TEMPLATES_DIR, 'index.html')
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
+
         current_location = '37.7726402, -122.4099154'
         location = ''
         term = 'ice cream'
         answer = yelp(self, current_location, location, term)
         self.response.out.write(answer)
-
+        
 app = webapp2.WSGIApplication([('/', MainHandler)],
                               debug=True)
