@@ -14,11 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import os
 import webapp2
+
+from google.appengine.ext.webapp import template
+
+TEMPLATES_DIR = 'templates'
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.out.write('Hello world!')
+    	index_file = os.path.join(TEMPLATES_DIR, 'index.html')
+        index_template = template.render(index_file, {})
+        self.response.out.write(index_template)
 
 app = webapp2.WSGIApplication([('/', MainHandler)],
                               debug=True)

@@ -1,4 +1,4 @@
-application: onmyway
+application: onmywayfb
 version: 1
 runtime: python27
 api_version: 1
@@ -8,6 +8,14 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
+
+- url: /static/css
+  static_dir: static/css
+  mime_type: text/css
+
+- url: /static/js
+  static_dir: static/js
+  mime_type: static/javascript
 
 - url: .*
   script: main.app
