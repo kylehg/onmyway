@@ -3,17 +3,16 @@ import oauth2
 import urllib
 import urllib2
 import logging
+from params import YelpParams
 
-path = 'api.yelp.com/v2/search'
-consumer_key = '83MKEDpPxnNnaYXUPBKmxw'
-consumer_secret = '6Shbk8HTNmX6a8mmDFa7gNWm4ko'
-token = 'oUjGEtvAmpA7XJWFf627_-bxYcCQqETd'
-token_secret = 'GNX66S0xKzGP4BYGkYIXrT2sG8E'
-url_params = {}
-url_params['limit'] = 1
-url_params['sort'] = 2
+PATH = 'api.yelp.com/v2/search'
 
 def yelp(self, current_location, location, keyword):
+    
+    url_params = {}
+    url_params['limit'] = 1
+    url_params['sort'] = 2
+
     if location:
         url_params['location'] = location
         logging.info(location)
@@ -26,17 +25,17 @@ def yelp(self, current_location, location, keyword):
     encoded_params = ''
     if url_params:
         encoded_params = urllib.urlencode(url_params)
-    url = 'http://%s?%s' % (path, encoded_params)
+    url = 'http://%s?%s' % (PATH, encoded_params)
     logging.info('URL: %s' % (url,))
                 
     # Sign the URL
-    consumer = oauth2.Consumer(consumer_key, consumer_secret)
+    consumer = oauth2.Consumer(YelpParams.YELP_CONSUMER_KEY, YelpParams.YELP_CONSUMER_SECRET)
     oauth_request = oauth2.Request('GET', url, {})
     oauth_request.update({'oauth_nonce': oauth2.generate_nonce(),
                           'oauth_timestamp': oauth2.generate_timestamp(),
-                          'oauth_token': token,
-                          'oauth_consumer_key': consumer_key})
-    self.token = oauth2.Token(token, token_secret)
+                          'oauth_token': YelpParams.YELP_TOKEN,
+                          'oauth_consumer_key': YelpParams.YELP_CONSUMER_KEY})
+    self.token = oauth2.Token(YelpParams.YELP_TOKEN, YelpParams.YELP_TOKEN_SECRET)
     oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, self.token)
     signed_url = oauth_request.to_url()
     logging.info('Signed URL: %s\n' % (signed_url,))
@@ -54,7 +53,8 @@ def yelp(self, current_location, location, keyword):
     results = {}
     top = response['businesses'][0]
     results['name'] = top['name']
-    results['latitude'] = top['location']['coordinate']['latitude']
-    results['longitude'] = top['location']['coordinate']['longitude']
-        
+    results['formatted_location'] = ', '.join(top['location']['address'])
+    latitude = top['location']['coordinate']['latitude']
+    longitude = top['location']['coordinate']['longitude']
+    results['location'] = {'latitude': latitude, 'longitude':longitude}
     return results

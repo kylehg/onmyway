@@ -28,8 +28,8 @@ class MainHandler(webapp2.RequestHandler):
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
 
-        current_location = '37.7726402, -122.4099154'
-        location = ''
+        current_location = ''
+        location = '6209 robinwood rd, bethesda maryland'
         term = 'ice cream'
         answer = yelp(self, current_location, location, term)
         self.response.out.write(answer)
