@@ -16,11 +16,32 @@
 
 
 
-<p>Hello, world!</p>
+<div id="home">
+
+	<h1 id="logo">OnMyWay</h1>
+  <p id="intro">Find directions, and stop on the way.</p>
+	<form id="omw-form" name="omw-form" method="GET" action="/">
+		<div class="input-wrap">
+			<input type="text" id="from" name="from" placeholder="From"/>
+		</div>
+		<div class="input-wrap">
+			<input type="text" id="to" name="to" placeholder="To"/>
+		</div>
+		<div class="input-wrap">
+			<input type="text" id="otw" name="otw" placeholder="On the way"/>
+		</div>
+		<div class="input-wrap">
+			<input type="submit" id="submit" name="submit" placeholder="Find my way"/>
+		</div>
+
+	</form>
+
+</div><!--/#home-->
 
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="/static/js/underscore.js"></script>
 <script src="/static/js/backbone.js"></script>
 <script src="/static/js/main.js"></script>
