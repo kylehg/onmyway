@@ -42,8 +42,8 @@ class MainHandler(webapp2.RequestHandler):
     	index_file = os.path.join(TEMPLATES_DIR, 'index.html')
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
-        answer = self.yelp(HOST, PATH, url_params, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
-        self.response.out.write(answer)
+#        answer = self.yelp(HOST, PATH, url_params, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
+#        self.response.out.write(answer)
         
     def yelp(self, host, path, url_params, consumer_key, consumer_secret, token, token_secret):
         """Returns response for API request."""

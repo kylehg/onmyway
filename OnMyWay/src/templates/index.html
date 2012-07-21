@@ -20,15 +20,17 @@
 
 	<h1 id="logo">OnMyWay</h1>
   <p id="intro">Find directions, and stop on the way.</p>
-	<form id="omw-form" name="omw-form" method="GET" action="/">
+	<form id="omw-form" name="omw-form">
 		<div class="input-wrap">
-			<input type="text" id="from" name="from" placeholder="From"/>
+      <div id="loading-loc">Finding current location</div>
+      <div id="cur-loc">My location <a href="javascript:void(0)">[x]</a></div>
+			<input type="text" id="from" name="from" style="display:none;" placeholder="From"/>
 		</div>
 		<div class="input-wrap">
 			<input type="text" id="to" name="to" placeholder="To"/>
 		</div>
 		<div class="input-wrap">
-			<input type="text" id="otw" name="otw" placeholder="On the way"/>
+			<input type="text" id="onmyway" name="onmyway" placeholder="On my way"/>
 		</div>
 		<div class="input-wrap">
 			<input type="submit" id="submit" name="submit" placeholder="Find my way"/>
@@ -37,6 +39,8 @@
 	</form>
 
 </div><!--/#home-->
+
+<div id="loading"></div>
 
 
 
