@@ -13,9 +13,16 @@ class MapParams(object):
     WAYPOINT_INCREMENTS = .003
     MAX_INTERMEDIATE_WAYPOINTS = 5
 
-class YelpParams(object):
+class YelpParamsKyle(object):
     #Authentication for Yelp
     YELP_CONSUMER_KEY = '83MKEDpPxnNnaYXUPBKmxw'
     YELP_CONSUMER_SECRET = '6Shbk8HTNmX6a8mmDFa7gNWm4ko'
     YELP_TOKEN = 'oUjGEtvAmpA7XJWFf627_-bxYcCQqETd'
     YELP_TOKEN_SECRET = 'GNX66S0xKzGP4BYGkYIXrT2sG8E'
+
+class YelpParams(object):
+    # OAuth2 Authentication Params for Yelp
+    YELP_CONSUMER_KEY = 'yDbF4bpNdDWW2clY7VnXHw'
+    YELP_CONSUMER_SECRET = 'L4jLP4q3kUrcwCJzfHKffAWGi0I'
+    YELP_TOKEN = 'SS4UfObtS8d8E6BYsDHNlsc0ZjGsNjWt'
+    YELP_TOKEN_SECRET = '-U1arPRU3EpSCPAuETyU3MxC_zA'
