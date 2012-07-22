@@ -48,6 +48,25 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+@import url(http://fonts.googleapis.com/css?family=Boogaloo);
+.yellow-box, #home #cur-loc, #home .input-wrap.submit a {
+  background-color: #f0e99c;
+  background-image: -webkit-linear-gradient(top, #f0e99c, #f8e93b);
+  /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image: -moz-linear-gradient(top, #f0e99c, #f8e93b);
+  /* Firefox 3.6-15 */
+  background-image: -o-linear-gradient(top, #f0e99c, #f8e93b);
+  /* Opera 11.10+ */
+  background-image: linear-gradient(to bottom, #f0e99c, #f8e93b);
+  /* Firefox 16+ */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); }
+
+.yellow-box:hover, #home #cur-loc:hover, #home .input-wrap.submit a:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); }
+
+.yellow-box:active, #home #cur-loc:active, #home .input-wrap.submit a:active {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3) inset; }
+
 body {
   font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
@@ -67,19 +86,102 @@ body {
   font-size: 24px;
   line-height: 28px; }
 #home input[type="text"] {
-  width: 98%; }
+  width: 98%;
+  border-radius: 5px; }
 #home #cur-loc {
-  display: none; }
+  display: none;
+  padding: 3px;
+  position: relative; }
+  #home #cur-loc a {
+    position: absolute;
+    right: 7px;
+    top: 4px;
+    display: block;
+    width: 26px;
+    height: 26px;
+    background: transparent url("https://github.com/kylehardgrave/ohq/raw/master/static/img/remove.png") no-repeat top left;
+    text-indent: -99999px; }
+#home .input-wrap.submit {
+  background: transparent url("/static/img/road.png") repeat-x center left;
+  height: 100px;
+  text-align: center;
+  margin-left: -10px;
+  margin-right: -10px; }
+  #home .input-wrap.submit > div {
+    display: inline-block;
+    background: transparent url("/static/img/car.png") center top no-repeat;
+    background-size: 175px;
+    width: 175px;
+    height: 100px;
+    position: relative; }
+  #home .input-wrap.submit a {
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: 87px;
+    margin-left: -25px;
+    width: 50px;
+    height: 30px;
+    color: black;
+    text-decoration: none;
+    font: bold 18px Boogaloo, "Comic Sans MS", cursive; }
 
-#results #sm-logo {
-  display: inline-block;
-  text-align: center; }
-  #results #sm-logo img {
-    height: 60px; }
-#results #map-view {
-  padding: 10px; }
-#results #map-canvas {
-  min-height: 400px; }
+#results {
+  position: relative; }
+  #results #header {
+    position: relative;
+    height: 60px;
+    background-color: #9ecde9;
+    text-align: center; }
+    #results #header #sm-logo {
+      display: inline-block; }
+      #results #header #sm-logo img {
+        height: 88px;
+        position: relative;
+        z-index: 10000000000; }
+    #results #header #back-btn {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      width: 65px; }
+      #results #header #back-btn img {
+        max-width: 100%; }
+    #results #header #switch-mode {
+      display: none; }
+  #results #map-view {
+    padding: 10px; }
+  #results #map-canvas {
+    min-height: 400px; }
+  #results #dir-view {
+    display: hidden;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 5px;
+    height: 60px;
+    font-size: 16px; }
+    #results #dir-view #dir-content {
+      padding-top: 5px; }
+    #results #dir-view .arr {
+      width: 15px;
+      height: 60px;
+      float: right;
+      font: 20px Boogaloo, "Comic Sans MS", cursive;
+      line-height: 55px;
+      vertical-align: middle;
+      padding: 0 1px 0 3px; }
+      #results #dir-view .arr:hover {
+        background-color: rgba(0, 0, 0, 0.9);
+        cursor: pointer; }
+      #results #dir-view .arr#rarr {
+        float: right;
+        margin-left: 10px; }
+      #results #dir-view .arr#larr {
+        float: left;
+        margin-right: 10px; }
 
 #loading {
   display: none;

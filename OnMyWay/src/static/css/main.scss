@@ -1,9 +1,37 @@
 /**
  * OnMyWay Styles
  */
-$main_blue: rgb(69, 152, 216);
-$inner_padding: 10px;
+
 @import "reset";
+@import url(http://fonts.googleapis.com/css?family=Boogaloo);
+
+$main_blue: rgb(69, 152, 216);
+$light_blue: rgb(158, 205, 233);
+$inner_padding: 10px;
+$cursive_font: Boogaloo, "Comic Sans MS", cursive;
+$yellow_from: rgb(240, 233, 156);
+$yellow_to: rgb(248, 233, 59);
+
+@mixin box_gradient($gradient_from, $gradient_to) {
+  background-color: $gradient_from;
+  background-image: -webkit-linear-gradient(top, $gradient_from, $gradient_to); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, $gradient_from, $gradient_to); /* Firefox 3.6-15 */
+  background-image:      -o-linear-gradient(top, $gradient_from, $gradient_to); /* Opera 11.10+ */
+  background-image:         linear-gradient(to bottom, $gradient_from, $gradient_to); /* Firefox 16+ */
+}
+
+.yellow-box {
+  @include box_gradient($yellow_from, $yellow_to);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.yellow-box:hover {
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.yellow-box:active {
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3) inset;
+}
 
 body {
   font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -40,20 +68,92 @@ body {
   input[type="text"] {
     @extend .input-sub;
     width: 98%;
+    border-radius: 5px;
   }
 
   #cur-loc {
     display: none;
+    @extend .yellow-box;
+    padding: 3px;
+    position: relative;
+
+    a {
+      position: absolute;
+      right: 7px;
+      top: 4px;
+      display: block;
+      width: 26px;
+      height: 26px;
+      background: transparent url("https://github.com/kylehardgrave/ohq/raw/master/static/img/remove.png") no-repeat top left;
+      text-indent: -99999px;
+    }
+  }
+
+  .input-wrap.submit {
+    background: transparent url("/static/img/road.png") repeat-x center left;
+    height: 100px;
+    text-align: center;
+    margin-left: -$inner_padding;
+    margin-right: -$inner_padding;
+
+    & > div {
+      display: inline-block;
+      background: transparent url("/static/img/car.png") center top no-repeat;
+      background-size: 175px;
+      width: 175px;
+      height: 100px;
+      position: relative;
+    }
+
+    a {
+      display: inline-block;
+      position: absolute;
+      top: 20px;
+      left: 87px;
+      margin-left: -25px;
+      width: 50px;
+      height: 30px;
+      color: black;
+      text-decoration: none;
+      font: bold 18px $cursive_font;
+      @extend .yellow-box;
+    }
   }
 }
 
 #results {
-  #sm-logo {
-    display: inline-block;
+  position: relative;
+
+  #header {
+    position: relative;
+    height: 60px;
+    background-color: $light_blue;
     text-align: center;
 
-    img {
-      height: 60px;
+
+    #sm-logo {
+      display: inline-block;
+
+      img {
+        height: 88px;
+        position: relative;
+        z-index: 10000000000;
+      }
+    }
+
+    #back-btn {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      width: 65px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    #switch-mode {
+      display: none;
     }
   }
 
@@ -63,6 +163,48 @@ body {
 
   #map-canvas {
     min-height: 400px;
+  }
+
+  #dir-view {
+    display: hidden;
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 5px;
+    height: 60px;
+    font-size: 16px;
+
+    #dir-content {
+      padding-top: 5px;
+    }
+
+    .arr {
+      width: 15px;
+      height: 60px;
+      float: right;
+      font: 20px $cursive_font;
+      line-height: 55px;
+      vertical-align: middle;
+      padding: 0 1px 0 3px;
+
+      &:hover {
+        background-color: rgba(0,0,0,0.9);
+        cursor: pointer;
+      }
+
+      &#rarr {
+        float: right;
+        margin-left: 10px;
+      }
+
+      &#larr {
+        float: left;
+        margin-right: 10px;
+      }
+    }
   }
 }
 

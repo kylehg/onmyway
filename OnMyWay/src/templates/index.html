@@ -32,8 +32,8 @@
     <div class="input-wrap">
       <input type="text" id="onmyway" name="onmyway" placeholder="On my way"/>
     </div>
-    <div class="input-wrap">
-      <input type="submit" id="submit" name="submit" placeholder="Find my way"/>
+    <div class="input-wrap submit">
+      <div><a href="javascript:void(0)" id="submit">Go!</a></div>
     </div>
 
   </form>
@@ -42,21 +42,20 @@
 
 <div id="results" style="display:none;">
   <header id="header">
-    <a id="back-btn" href="javascript:void(0)" title="Search again">&laquo;</a>
+    <a class="nav-btn" id="back-btn" href="javascript:void(0)" title="Search again"><img src="/static/img/back-btn.png" alt="<<"/></a>
     <h1 id="sm-logo"><img src="/static/img/logo.png" alt="OnMyWay"/></h1>
+    <a class="nav-btn" id="switch-mode" href="#list-view">List</a>
   </header>
-  <nav id="view-nav">
-    <ul>
-      <li class="selected"><a href="#map-view">Map</a></li>
-      <li><a href="#list-view">List</a></li>
-    </ul>
-  </nav>
 
   <div id="map-view">
     <div id="map-canvas"></div>
   </div>
 
-  <div id="list-view"></div>
+  <div id="dir-view">
+    <div class="arr" id="larr">&laquo;</div>
+    <div class="arr" id="rarr">&raquo;</div>
+    <div id="dir-content"></div>
+  </div>
 
 </div><!--/#results-->
 

@@ -12,9 +12,8 @@ $(function() {
     dest: null,
     directionsService: new google.maps.DirectionsService(),
     directionsRenderer: new google.maps.DirectionsRenderer(),
-    greenMarker: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-    blueMarker: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-    redMarker: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    stepDisplay: new google.maps.InfoWindow(),
+    curDirStep: 0
   };
 
   omw.init = function() {
@@ -25,13 +24,18 @@ $(function() {
       $('#loading-loc').hide();
       $('#from').hide();
       $('#cur-loc').show().attr('title', lat + ',' + lng);
+
+      // DELETE ME:
+      var e = document.createEvent('Events');
+      e.initEvent('click', true, false);
+      $('#submit').get()[0].dispatchEvent(e);      
     });
 
     // Attach event handlers
     // ---------------------
 
     // On form submit
-    $('#omw-form').submit(omw.formSubmitHandler);
+    $('#submit').click(omw.formSubmitHandler);
 
     // Cancel geolocation finding if asked
     $('#cur-loc a').click(function(event) {
@@ -39,11 +43,17 @@ $(function() {
       $('#from').show();
     });
 
+    // Go back to the home page
+    $('#back-btn').click(function(event) {
+      $('#results').hide();
+      $('#home').show();
+    });
+
 
     // Testing: DELETE ME
     $('#to').val('535 west 112th street, new york');
     $('#onmyway').val('ice cream');
-
+    
   };
 
 
@@ -92,25 +102,118 @@ $(function() {
     }));
   };
 
-
   omw.resultsHandler = function(data) {
     console.log(data);
 
     var directionsRenderer = omw.directionsRenderer,
       orig = data.origin,
       dest = data.destination,
-		  recs = data.recommendations,
-      origMarker = omw.markerInit('Origin', orig.lat, orig.lng, omw.greenMarker),
-      destMarker = omw.markerInit('Destination', dest.lat, dest.lng, omw.redMarker);
+      display = omw.stepDisplay,
+      recs = data.recommendations,
+      origMarker = omw.markerInit(orig.lat, orig.lng),
+      destMarker = omw.markerInit(dest.lat, dest.lng);
     var mapOptions = {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map($('#map-canvas').get()[0], mapOptions);
 
+    var attachText = function(display, marker, text) {
+      google.maps.event.addListener(marker, 'click', function() {
+        display.setContent(text);
+        display.open(map, marker);
+        $(".button-call").click(function() {
+          console.log("worked!");
+          for (var mark in omw.markerArray) {
+            omw.markerArray[mark].setMap(null);
+          }
+          omw.markerArray = [];
+//          var marker = omw.markerInit($(this).attr("data-lat"), $(this).attr("data-lng"));
+//          omw.markerArray.push(marker);
+//          marker.setMap(map);
+          directionsRenderer.setMap(map);
+          var request = {  
+            origin: new google.maps.LatLng(orig.lat, orig.lng),
+      			waypoints: [{
+      				location: new google.maps.LatLng($(this).attr("data-lat"),
+                  $(this).attr("data-lng")),
+      				stopover: true
+      			}],
+            destination: new google.maps.LatLng(dest.lat, dest.lng),
+            travelMode: google.maps.TravelMode.DRIVING
+          };
+
+          omw.directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              directionsRenderer.setDirections(result);
+      			  showSteps(result);
+            } else {
+              console.log("Soemthing went wrong " + status);
+            }
+          });
+        });
+      });
+    }; //attachText
+
+	  function showSteps(directionResult) {
+		  var instructions = omw.instructions = [];
+      directionResult.routes[0].legs[0].steps.forEach(function(step) {
+        var marker = new google.maps.Marker({
+          position: step.start_point,
+          map: map
+        });
+        instructions.push([marker, step.instructions]);
+      });
+
+      directionResult.routes[0].legs[1].steps.forEach(function(step) {
+        var marker = new google.maps.Marker({
+          position: step.start_point,
+          map: map
+        });
+        instructions.push([marker, step.instructions]);
+      });
+
+      console.log("show directions");
+      $('#dir-view').show();
+      $('#dir-content').html(omw.instructions[0]);
+      $('#rarr').click(function(event) {
+        incrInstructions(1);
+      });
+      $('#larr').click(function(event) {
+        incrInstructions(-1);
+      });
+
+      function incrInstructions(step) {
+        console.log("incr instructions by" + step);
+        var newCur = omw.curDirStep + step;
+        if (newCur < 0 || newCur >= omw.instructions.length) {
+          return;
+        }
+        omw.curDirStep = newCur;
+        $('#dir-content').html(omw.instructions[newCur][1]); // set content
+        omw.instructions[newCur][0] //todo pick up here
+      }
+    } //showSteps
+
+	  
     // Plot the markers
+    omw.markerArray = [];
     recs.forEach(function(rec) {
-      omw.markerInit(rec.name, rec.location.latitude, rec.location.longitude, omw.blueMarker).setMap(map);
+      var marker = omw.markerInit(rec.location.latitude, rec.location.longitude);
+      omw.markerArray.push(marker);
+      marker.setMap(map);
+      var text = 
+        "<div style='font-weight:bold; font-size:13px; float:left;'>" + 
+          rec.name  + "</div>" +
+        "<div style='color:#444; font-size:11px; clear:left; float:left;'>" + 
+          rec.formatted_address + "</div>" + 
+        "<div style='float: right;padding-right:2px;font-size: 12px;'>" + 
+          rec.rating + " / 5.0</div>" + 
+        "<div style='clear:both;text-align:right;padding-top:3px;'><button data-lat='" + 
+          rec.location.latitude + "' data-lng='" + rec.location.longitude + 
+          "' class='button-call'>Select This</button></div>";
+      attachText(display, marker, text);
     });
+
 
     // Plot the directions
     directionsRenderer.setMap(map);
@@ -122,6 +225,8 @@ $(function() {
     omw.directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
+      } else {
+        console.log("Soemthing went wrong " + status);
       }
     });
 
@@ -129,44 +234,11 @@ $(function() {
     $('#loading').hide();
     $('#home').hide();
     $('#results').show();
+    $('#map-canvas').height($(window).height() - 80);
   };
 
 
   // Kick things off
   omw.init();
-  // omw.resultsHandler({
-  //   results: {
-  //     origin: {
-  //       lat: 40.80510,
-  //       lng: -73.96487
-  //     },
-  //     destination: {
-  //       lat: 40.75377,
-  //       lng: -73.97855  
-  //     },
-  //     recommendations: [
-  //       {
-  //         lat: 40.77176,
-  //         lng: -73.97529 
-  //       },
-  //       {
-  //         lat: 40.76903,
-  //         lng: -73.97031
-  //       },
-  //       {
-  //         lat: 40.79935,
-  //         lng: -73.97146
-  //       },
-  //       {
-  //         lat: 40.78010,
-  //         lng: -73.96956
-  //       },
-  //       {
-  //         lat: 40.79176,
-  //         lng: -73.97825
-  //       }
-  //     ]
-  //   }
-  // });
 
 });
