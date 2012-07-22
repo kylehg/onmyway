@@ -50,8 +50,8 @@ $(function() {
 
 
     // Testing: DELETE ME
-    $('#to').val('535 west 112th street, new york');
-    $('#onmyway').val('ice cream');
+    // $('#to').val('535 west 112th street, new york');
+    // $('#onmyway').val('ice cream');
     
   };
 
