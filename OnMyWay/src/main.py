@@ -27,7 +27,7 @@ from yelp import yelp_recommendation
 from google.appengine.ext.webapp import template
 
 TEMPLATES_DIR = 'templates'
-DEBUG = True
+DEBUG = False
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -48,7 +48,8 @@ class RPCHandler(webapp2.RequestHandler):
             response = method()
             response['status'] = 'OK'
         else:
-            response = {'status': 'UNSUPPORTED_METHOD'}    
+            response = {'status': 'UNSUPPORTED_METHOD'}
+        self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(response))
 
     def on_my_way(self):

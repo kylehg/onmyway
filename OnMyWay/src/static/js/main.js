@@ -38,7 +38,8 @@ $(function() {
 
 
     // Testing: DELETE ME
-    // $('#to')
+    $('#to').val('535 west 112th street, new york');
+    $('#onmyway').val('ice cream');
 
   };
 
@@ -88,7 +89,7 @@ $(function() {
 
 
   omw.resultsHandler = function(data) {
-    console.log(typeof data);
+    console.log(data);
 
     var directionsRenderer = omw.directionsRenderer,
       orig = data.origin,
@@ -103,7 +104,7 @@ $(function() {
 
     // Plot the markers
     recs.forEach(function(rec) {
-      ohm.markerInit(rec.lat, rec.lng).setMap(map);
+      omw.markerInit(rec.location.latitude, rec.location.longitude).setMap(map);
     });
 
     // Plot the directions
