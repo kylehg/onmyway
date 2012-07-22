@@ -48,7 +48,7 @@ class RPCHandler(webapp2.RequestHandler):
             response = method()
             response['status'] = 'OK'
         else:
-            response = {'status': 'UNSUPPORTED_METHOD'}
+            response = {'status': 'UNSUPPORTED_METHOD'} 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(response))
 
@@ -94,8 +94,8 @@ class RPCHandler(webapp2.RequestHandler):
 
         logging.info('Origin Point: %s', end_locations[0])
         logging.info('Destination Point: %s', end_locations[1])
-        search_locations = maps.intermediate_locations(end_locations[0],
-                                                       end_locations[1])
+        search_locations = maps.intermediate_locations_dir(end_locations[0],
+                                                           end_locations[1])
         recommendations = yelp_recommendation(query, search_locations)
         logging.info(recommendations)
         return {'recommendations': recommendations, 'origin': end_locations[0],

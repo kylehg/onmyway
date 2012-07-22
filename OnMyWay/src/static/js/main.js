@@ -11,7 +11,10 @@ $(function() {
     orig: null,
     dest: null,
     directionsService: new google.maps.DirectionsService(),
-    directionsRenderer: new google.maps.DirectionsRenderer()
+    directionsRenderer: new google.maps.DirectionsRenderer(),
+    greenMarker: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+    blueMarker: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+    redMarker: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
   };
 
   omw.init = function() {
@@ -81,9 +84,11 @@ $(function() {
     }, (error || function(msg) { console.log(msg); }));
   };
 
-  omw.markerInit = function(lat, lng) {
+  omw.markerInit = function(title, lat, lng, color) {
     return (new google.maps.Marker({
-      position: new google.maps.LatLng(lat, lng)
+      title: title,
+      position: new google.maps.LatLng(lat, lng),
+      icon: new google.maps.MarkerImage(color)
     }));
   };
 
@@ -95,8 +100,8 @@ $(function() {
       orig = data.origin,
       dest = data.destination,
 		  recs = data.recommendations,
-      origMarker = omw.markerInit(orig.lat, orig.lng),
-      destMarker = omw.markerInit(dest.lat, dest.lng);
+      origMarker = omw.markerInit('Origin', orig.lat, orig.lng, omw.greenMarker),
+      destMarker = omw.markerInit('Destination', dest.lat, dest.lng, omw.redMarker);
     var mapOptions = {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -104,7 +109,7 @@ $(function() {
 
     // Plot the markers
     recs.forEach(function(rec) {
-      omw.markerInit(rec.location.latitude, rec.location.longitude).setMap(map);
+      omw.markerInit(rec.name, rec.location.latitude, rec.location.longitude, omw.blueMarker).setMap(map);
     });
 
     // Plot the directions

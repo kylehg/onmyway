@@ -76,6 +76,51 @@ def places(query, sensor, **geo_args):
         logging.error('Places API Returned Status: %s', result['status'])
 
 
+def intermediate_locations_dir(start_location, end_location):
+    """Given a start and end location, returns a list of intermediate locations.
+
+    Uses Google Maps Direction API to return the intermediate locations.
+
+    Args:
+        start_location: A location dictionary with 'lat' and 'lng' keys.
+        end_location: A location dictionary with 'lat' and 'lng' keys.
+
+    Returns:
+        intermediate_locations: A list of locations in between start and end.
+    """
+    origin = '%s,%s' % (start_location['lat'], start_location['lng'])
+    destination = '%s,%s' % (end_location['lat'], end_location['lng'])
+    args = urllib.urlencode({'origin': origin, 'destination': destination,
+                             'sensor': 'true'})
+    url = MapParams.API_BASE_URL + '/directions/json?' + args
+    logging.info('Making Google Directions Request: %s', url)
+    result = json.load(urllib.urlopen(url))
+    inter_locations = []
+    if result['status'] == 'OK':
+        steps = result['routes'][0]['legs'][0]['steps']
+        for i in range(len(steps)):
+            step = steps[i]
+            location = step.get('start_location')
+
+            # Check for detailed intermediate locations
+            if i > 0 and location:
+                prev_step = steps[i-1]
+                prev_location = prev_step.get('start_location')
+                distance = prev_step.get('distance')
+                if distance and prev_location:
+                    distance_meters = distance.get('value')
+                    if distance_meters > 1200:
+                        detailed = intermediate_locations(prev_location,
+                                                          location)
+                        inter_locations.extend(detailed[1:-1])
+
+            if location:
+                inter_locations.append(location)
+        logging.info(inter_locations)
+        return inter_locations
+    else:
+        logging.error('Geocode API Returned Status: %s', result['status'])
+
 def intermediate_locations(start_location, end_location):
     """Given a start and end location, returns a list of intermediate locations.
 
@@ -111,8 +156,8 @@ def intermediate_locations(start_location, end_location):
 if __name__ == '__main__':
     start_location = {"lat": 40.74189000000001, "lng": -74.00468000000001}
     end_location = {"lat": 40.77415000000001, "lng": -73.96914000000001}
-    # start_location = {"lat": 0.0, "lng": -400.0}
-    # end_location = {"lat": 20.0, "lng": 25.0}
+    # start_location = {"lat": 0.0, "lng": 0.0}
+    # end_location = {"lat": 6.0, "lng": 3.0}
     points = intermediate_locations(start_location, end_location)
     for point in points:
         print point

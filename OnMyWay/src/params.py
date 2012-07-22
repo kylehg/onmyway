@@ -10,7 +10,7 @@ class MapParams(object):
     API_BASE_URL_SECURE = 'https://maps.googleapis.com/maps/api'
 
     # Latitude / Longitude Increment Amounts for Intermediate Waypoints
-    WAYPOINT_INCREMENTS = .003
+    WAYPOINT_INCREMENTS = 0.006
     MAX_INTERMEDIATE_WAYPOINTS = 5
 
 class YelpParamsKyle(object):
