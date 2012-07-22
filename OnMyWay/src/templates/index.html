@@ -18,45 +18,45 @@
 
 <div id="home">
 
-	<h1 id="big-logo"><img src="/static/img/logo.png" alt="OnMyWay"/></h1>
+  <h1 id="big-logo"><img src="/static/img/logo.png" alt="OnMyWay"/></h1>
   <p id="intro">Find directions, and stop on the way.</p>
-	<form id="omw-form" name="omw-form">
-		<div class="input-wrap">
+  <form id="omw-form" name="omw-form">
+    <div class="input-wrap">
       <div class="input-sub" id="loading-loc">Finding current location</div>
       <div class="input-sub" id="cur-loc">My location <a href="javascript:void(0)">[x]</a></div>
-			<input type="text" id="from" name="from" style="display:none;" placeholder="From"/>
-		</div>
-		<div class="input-wrap">
-			<input type="text" id="to" name="to" placeholder="To"/>
-		</div>
-		<div class="input-wrap">
-			<input type="text" id="onmyway" name="onmyway" placeholder="On my way"/>
-		</div>
-		<div class="input-wrap">
-			<input type="submit" id="submit" name="submit" placeholder="Find my way"/>
-		</div>
+      <input type="text" id="from" name="from" style="display:none;" placeholder="From"/>
+    </div>
+    <div class="input-wrap">
+      <input type="text" id="to" name="to" placeholder="To"/>
+    </div>
+    <div class="input-wrap">
+      <input type="text" id="onmyway" name="onmyway" placeholder="On my way"/>
+    </div>
+    <div class="input-wrap">
+      <input type="submit" id="submit" name="submit" placeholder="Find my way"/>
+    </div>
 
-	</form>
+  </form>
 
 </div><!--/#home-->
 
 <div id="results" style="display:none;">
-	<header id="header">
-		<a id="back-btn" href="javascript:void(0)" title="Search again">&laquo;</a>
-		<h1 id="sm-logo"><img src="/static/img/logo.png" alt="OnMyWay"/></h1>
-	</header>
-	<nav id="view-nav">
-		<ul>
-			<li class="selected"><a href="#map-view">Map</a></li>
-			<li><a href="#list-view">List</a></li>
-		</ul>
-	</nav>
+  <header id="header">
+    <a id="back-btn" href="javascript:void(0)" title="Search again">&laquo;</a>
+    <h1 id="sm-logo"><img src="/static/img/logo.png" alt="OnMyWay"/></h1>
+  </header>
+  <nav id="view-nav">
+    <ul>
+      <li class="selected"><a href="#map-view">Map</a></li>
+      <li><a href="#list-view">List</a></li>
+    </ul>
+  </nav>
 
-	<div id="map-view">
-		<div id="map-canvas"></div>
-	</div>
+  <div id="map-view">
+    <div id="map-canvas"></div>
+  </div>
 
-	<div id="list-view"></div>
+  <div id="list-view"></div>
 
 </div><!--/#results-->
 

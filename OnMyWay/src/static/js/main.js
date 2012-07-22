@@ -7,20 +7,20 @@ $(function() {
 
   var omw = window.omw = omw || {
     lat: null,
-		lng: null,
-		orig: null,
-		dest: null,
-		directionsService: new google.maps.DirectionsService(),
-		directionsRenderer: new google.maps.DirectionsRenderer()
-	};
+    lng: null,
+    orig: null,
+    dest: null,
+    directionsService: new google.maps.DirectionsService(),
+    directionsRenderer: new google.maps.DirectionsRenderer()
+  };
 
   omw.init = function() {
 
-		omw.getLoc(function(position) {		// If we can get the location
+    omw.getLoc(function(position) {   // If we can get the location
       var lat = omw.lat = position.coords.latitude,
         lng = omw.lng = position.coords.longitude;
       $('#loading-loc').hide();
-  		$('#from').hide();
+      $('#from').hide();
       $('#cur-loc').show().attr('title', lat + ',' + lng);
     });
 
@@ -30,21 +30,21 @@ $(function() {
     // On form submit
     $('#omw-form').submit(omw.formSubmitHandler);
 
-		// Cancel geolocation finding if asked
+    // Cancel geolocation finding if asked
     $('#cur-loc a').click(function(event) {
       $(this).parent().hide();
       $('#from').show();
     });
 
-	};
+  };
 
-	omw.formSubmitHandler =	function(event) {
+  omw.formSubmitHandler = function(event) {
       event.preventDefault(); // Don't actually submit
       var data = {
-				'destination_text': $('#to').val(),
+        'destination_text': $('#to').val(),
         'query': $('#onmyway').val(),
         'method': 'onmyway'
-			};
+      };
       
       var from = $('#from').val().trim();
       if (!from && !(omw.lat || omw.lng)) {
@@ -53,13 +53,13 @@ $(function() {
       }
 
       if (from) {
-				data['origin_text'] = from;
-			}
+        data['origin_text'] = from;
+      }
 
       if (omw.lat && omw.lng) {
-				data['origin_lat'] = omw.lat;
-				data['origin_lng'] = omw.lng;
-			}
+        data['origin_lat'] = omw.lat;
+        data['origin_lng'] = omw.lng;
+      }
 
       $('#loading').show();
       console.log('Submitting form with the following data:');
@@ -68,12 +68,12 @@ $(function() {
   };
 
   omw.getLoc = function(cb, error) {
-		navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function(position) {
       omw.lat = position.coords.latitude;
       omw.lng = position.coords.longitude;
       cb(position);
     }, (error || function(msg) { console.log(msg); }));
-	};
+  };
 
   omw.markerInit = function(lat, lng) {
     return (new google.maps.Marker({
@@ -87,8 +87,8 @@ $(function() {
   //   console.log('Received following results');
   //   console.log(data);
 
-		// var orig = data.results.origin,
-		//   dest = data.results.destination,
+    // var orig = data.results.origin,
+    //   dest = data.results.destination,
   //     origMarker = omw.markerInit(orig.lat, orig.lng),
   //     destMarker = omw.markerInit(dest.lat, dest.lng);
 
@@ -107,7 +107,7 @@ $(function() {
   //     mapTypeId: google.maps.MapTypeId.ROADMAP
   //   };*/
 
-		// // Draw the preliminary map
+    // // Draw the preliminary map
   //   console.log('lsjlk');
   //   var map = new google.maps.Map($('#map-canvas').get(), mapOpts);
   //  //  omw.dirRenderer.setMap(map);
@@ -125,11 +125,11 @@ $(function() {
   //  //  omw.dirService.route(dirRequest, function(result, status) {
   //  //    console.log("this seems to be the problem");
   //  //    if (status == google.maps.DirectionsStatus.OK) {
-		// 	// 	dirRenderer.setDirections(result);
-		// 	// } else {
-		// 	// 	 console.log("Directions request with status:");
-		// 	// 	 console.log(status);
-		// 	// }
+    //  //  dirRenderer.setDirections(result);
+    //  // } else {
+    //  //   console.log("Directions request with status:");
+    //  //   console.log(status);
+    //  // }
   //  //  });
 
     var directionsRenderer = omw.directionsRenderer,
@@ -161,7 +161,7 @@ $(function() {
     $('#loading').hide();
     $('#home').hide();
     $('#results').show();
-	};
+  };
 
 
   // Kick things off
