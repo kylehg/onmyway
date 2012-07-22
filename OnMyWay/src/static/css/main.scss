@@ -75,6 +75,18 @@ body {
     display: none;
     @extend .yellow-box;
     padding: 3px;
+    position: relative;
+
+    a {
+      position: absolute;
+      right: 7px;
+      top: 4px;
+      display: block;
+      width: 26px;
+      height: 26px;
+      background: transparent url("https://github.com/kylehardgrave/ohq/raw/master/static/img/remove.png") no-repeat top left;
+      text-indent: -99999px;
+    }
   }
 
   .input-wrap.submit {
