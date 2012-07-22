@@ -50,8 +50,8 @@ $(function() {
 
 
     // Testing: DELETE ME
-    // $('#to').val('535 west 112th street, new york');
-    // $('#onmyway').val('ice cream');
+    $('#to').val('535 west 112th street, new york');
+    $('#onmyway').val('ice cream');
     
   };
 
@@ -168,7 +168,16 @@ $(function() {
       var marker = omw.markerInit(rec.location.latitude, rec.location.longitude);
       omw.markerArray.push(marker);
       marker.setMap(map);
-      var text = "<div class='name'>"+rec.name +"</div><div class='address'>" + rec.formatted_address + "</div><div class ='rating'>Yelp Rating: " + rec.rating + "</div>" + "<button data-lat='" + rec.location.latitude + "' data-lng='" + rec.location.longitude + "' type='submit' class='button' >Select This</button>";
+      var text = 
+        "<div style='font-weight:bold; font-size:13px; float:left;'>" + 
+          rec.name  + "</div>" +
+        "<div style='color:#444; font-size:11px; clear:left; float:left;'>" + 
+          rec.formatted_address + "</div>" + 
+        "<div style='float: right;padding-right:2px;font-size: 12px;'>" + 
+          rec.rating + " / 5.0</div>" + 
+        "<div style='clear:both;text-align:right;padding-top:3px;'><button data-lat='" + 
+          rec.location.latitude + "' data-lng='" + rec.location.longitude + 
+          "' type='submit'>Select This</button></div>";
       attachText(display, marker, text);
     });
 

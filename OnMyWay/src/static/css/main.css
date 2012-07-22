@@ -126,30 +126,54 @@ body {
     text-decoration: none;
     font: bold 18px Boogaloo, "Comic Sans MS", cursive; }
 
-#results #header {
-  position: relative;
-  height: 60px;
-  background-color: #9ecde9;
-  text-align: center; }
-  #results #header #sm-logo {
-    display: inline-block; }
-    #results #header #sm-logo img {
-      height: 88px;
-      position: relative;
-      z-index: 10000000000; }
-  #results #header #back-btn {
+#results {
+  position: relative; }
+  #results #header {
+    position: relative;
+    height: 60px;
+    background-color: #9ecde9;
+    text-align: center; }
+    #results #header #sm-logo {
+      display: inline-block; }
+      #results #header #sm-logo img {
+        height: 88px;
+        position: relative;
+        z-index: 10000000000; }
+    #results #header #back-btn {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      width: 65px; }
+      #results #header #back-btn img {
+        max-width: 100%; }
+    #results #header #switch-mode {
+      display: none; }
+  #results #map-view {
+    padding: 10px; }
+  #results #map-canvas {
+    min-height: 400px; }
+  #results #dir-view {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 12px;
     position: absolute;
-    top: 15px;
-    left: 20px;
-    width: 65px; }
-    #results #header #back-btn img {
-      max-width: 100%; }
-  #results #header #switch-mode {
-    display: none; }
-#results #map-view {
-  padding: 10px; }
-#results #map-canvas {
-  min-height: 400px; }
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    height: 60px; }
+    #results #dir-view .arr {
+      width: 15px;
+      height: 60px;
+      float: right; }
+      #results #dir-view .arr:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        vertical-align: middle; }
+      #results #dir-view .arr#rarr {
+        float: right; }
+      #results #dir-view .arr#larr {
+        float: left; }
 
 #loading {
   display: none;

@@ -122,6 +122,7 @@ body {
 }
 
 #results {
+  position: relative;
 
   #header {
     position: relative;
@@ -162,6 +163,38 @@ body {
 
   #map-canvas {
     min-height: 400px;
+  }
+
+  #dir-view {
+    background-color: rgba(0,0,0,0.3);
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    height: 60px;
+
+    .arr {
+      width: 15px;
+      height: 60px;
+      float: right;
+
+      &:hover {
+        background-color: rgba(0,0,0,0.1);
+        cursor: pointer;
+        vertical-align: middle;
+      }
+
+      &#rarr {
+        float: right;
+      }
+
+      &#larr {
+        float: left;
+      }
+    }
   }
 }
 
