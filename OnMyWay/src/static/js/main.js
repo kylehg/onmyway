@@ -29,7 +29,7 @@ $(function() {
     // ---------------------
 
     // On form submit
-    $('#omw-form').submit(omw.formSubmitHandler);
+    $('#submit').click(omw.formSubmitHandler);
 
     // Cancel geolocation finding if asked
     $('#cur-loc a').click(function(event) {
@@ -126,6 +126,8 @@ $(function() {
     omw.directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
+      } else {
+        console.log("Soemthing went wrong " + status);
       }
     });
 
@@ -138,39 +140,5 @@ $(function() {
 
   // Kick things off
   omw.init();
-  // omw.resultsHandler({
-  //   results: {
-  //     origin: {
-  //       lat: 40.80510,
-  //       lng: -73.96487
-  //     },
-  //     destination: {
-  //       lat: 40.75377,
-  //       lng: -73.97855  
-  //     },
-  //     recommendations: [
-  //       {
-  //         lat: 40.77176,
-  //         lng: -73.97529 
-  //       },
-  //       {
-  //         lat: 40.76903,
-  //         lng: -73.97031
-  //       },
-  //       {
-  //         lat: 40.79935,
-  //         lng: -73.97146
-  //       },
-  //       {
-  //         lat: 40.78010,
-  //         lng: -73.96956
-  //       },
-  //       {
-  //         lat: 40.79176,
-  //         lng: -73.97825
-  //       }
-  //     ]
-  //   }
-  // });
 
 });

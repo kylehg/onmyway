@@ -3,7 +3,16 @@
  */
 $main_blue: rgb(69, 152, 216);
 $inner_padding: 10px;
+$cursive_font: "Comic Sans MS", cursive;
 @import "reset";
+
+@mixin box_gradient($gradient_from, $gradient_to) {
+  background-color: $gradient_from;
+  background-image: -webkit-linear-gradient(top, $gradient_from, $gradient_to); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, $gradient_from, $gradient_to); /* Firefox 3.6-15 */
+  background-image:      -o-linear-gradient(top, $gradient_from, $gradient_to); /* Opera 11.10+ */
+  background-image:         linear-gradient(to bottom, $gradient_from, $gradient_to); /* Firefox 16+ */
+}
 
 body {
   font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -44,6 +53,36 @@ body {
 
   #cur-loc {
     display: none;
+  }
+
+  .input-wrap.submit {
+    border: 1px solid red;
+    background: transparent url("/static/img/road.png") repeat-x center left;
+    height: 100px;
+    text-align: center;
+
+    & > div {
+      display: inline-block;
+      background: transparent url("/static/img/car.png") center top no-repeat;
+      background-size: 175px;
+      width: 175px;
+      height: 100px;
+      position: relative;
+    }
+
+    a {
+      display: inline-block;
+      position: absolute;
+      top: 20px;
+      left: 87px;
+      margin-left: -25px;
+      width: 50px;
+      height: 30px;
+      color: black;
+      text-decoration: none;
+      font: bold 18px $cursive_font;
+      @include box_gradient(rgb(240, 233, 156), rgb(248, 233, 59));      
+    }
   }
 }
 
