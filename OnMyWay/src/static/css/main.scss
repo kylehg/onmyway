@@ -1,22 +1,69 @@
 /**
  * OnMyWay Styles
  */
-
+$main_blue: rgb(69, 152, 216);
+$inner_padding: 10px;
 @import "reset";
 
 body {
-  font: 12px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
+  background-color: $main_blue;
 }
 
-#cur-loc {
-  display: none;
+#home {
+  #big-logo {
+    padding: $inner_padding;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  #intro {
+    padding: $inner_padding;
+  }
+
+  #omw-form {
+    padding: $inner_padding;
+  }
+
+  .input-wrap {
+    margin-bottom: 10px;
+  }
+
+  .input-sub {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  input[type="text"] {
+    @extend .input-sub;
+    width: 98%;
+  }
+
+  #cur-loc {
+    display: none;
+  }
+}
+
+#results {
+  #sm-logo {
+    display: inline-block;
+    text-align: center;
+
+    img {
+      height: 60px;
+    }
+  }
 }
 
 #loading {
   display: none; /* Only show with JS */
   position: fixed;
-  top: 0; bottom: 0;
-	left: 0; right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: rgba(0,0,0,0.8);
 }

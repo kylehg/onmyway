@@ -49,11 +49,33 @@ table {
   border-spacing: 0; }
 
 body {
-  font: 12px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222;
+  background-color: #4598d8; }
 
-#cur-loc {
+#home #big-logo {
+  padding: 10px; }
+  #home #big-logo img {
+    max-width: 100%; }
+#home #intro {
+  padding: 10px; }
+#home #omw-form {
+  padding: 10px; }
+#home .input-wrap {
+  margin-bottom: 10px; }
+#home .input-sub, #home input[type="text"] {
+  font-size: 24px;
+  line-height: 28px; }
+#home input[type="text"] {
+  width: 98%; }
+#home #cur-loc {
   display: none; }
+
+#results #sm-logo {
+  display: inline-block;
+  text-align: center; }
+  #results #sm-logo img {
+    height: 60px; }
 
 #loading {
   display: none;
