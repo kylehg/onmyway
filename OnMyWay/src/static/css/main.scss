@@ -6,6 +6,7 @@
 @import url(http://fonts.googleapis.com/css?family=Boogaloo);
 
 $main_blue: rgb(69, 152, 216);
+$light_blue: rgb(158, 205, 233);
 $inner_padding: 10px;
 $cursive_font: Boogaloo, "Comic Sans MS", cursive;
 $yellow_from: rgb(240, 233, 156);
@@ -77,10 +78,11 @@ body {
   }
 
   .input-wrap.submit {
-    border: 1px solid red;
     background: transparent url("/static/img/road.png") repeat-x center left;
     height: 100px;
     text-align: center;
+    margin-left: -$inner_padding;
+    margin-right: -$inner_padding;
 
     & > div {
       display: inline-block;
@@ -108,12 +110,37 @@ body {
 }
 
 #results {
-  #sm-logo {
-    display: inline-block;
+
+  #header {
+    position: relative;
+    height: 60px;
+    background-color: $light_blue;
     text-align: center;
 
-    img {
-      height: 60px;
+
+    #sm-logo {
+      display: inline-block;
+
+      img {
+        height: 88px;
+        position: relative;
+        z-index: 10000000000;
+      }
+    }
+
+    #back-btn {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      width: 65px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    #switch-mode {
+      display: none;
     }
   }
 

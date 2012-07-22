@@ -92,10 +92,11 @@ body {
   display: none;
   padding: 3px; }
 #home .input-wrap.submit {
-  border: 1px solid red;
   background: transparent url("/static/img/road.png") repeat-x center left;
   height: 100px;
-  text-align: center; }
+  text-align: center;
+  margin-left: -10px;
+  margin-right: -10px; }
   #home .input-wrap.submit > div {
     display: inline-block;
     background: transparent url("/static/img/car.png") center top no-repeat;
@@ -115,11 +116,26 @@ body {
     text-decoration: none;
     font: bold 18px Boogaloo, "Comic Sans MS", cursive; }
 
-#results #sm-logo {
-  display: inline-block;
+#results #header {
+  position: relative;
+  height: 60px;
+  background-color: #9ecde9;
   text-align: center; }
-  #results #sm-logo img {
-    height: 60px; }
+  #results #header #sm-logo {
+    display: inline-block; }
+    #results #header #sm-logo img {
+      height: 88px;
+      position: relative;
+      z-index: 10000000000; }
+  #results #header #back-btn {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 65px; }
+    #results #header #back-btn img {
+      max-width: 100%; }
+  #results #header #switch-mode {
+    display: none; }
 #results #map-view {
   padding: 10px; }
 #results #map-canvas {
