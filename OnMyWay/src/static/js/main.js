@@ -11,7 +11,8 @@ $(function() {
     orig: null,
     dest: null,
     directionsService: new google.maps.DirectionsService(),
-    directionsRenderer: new google.maps.DirectionsRenderer()
+    directionsRenderer: new google.maps.DirectionsRenderer(),
+	stepDisplay: new google.maps.InfoWindow()
   };
 
   omw.init = function() {
@@ -87,14 +88,14 @@ $(function() {
     }));
   };
 
-
   omw.resultsHandler = function(data) {
     console.log(data);
 
     var directionsRenderer = omw.directionsRenderer,
       orig = data.origin,
       dest = data.destination,
-		  recs = data.recommendations,
+	  display = data.stepDisplay,
+	  recs = data.recommendations,
       origMarker = omw.markerInit(orig.lat, orig.lng),
       destMarker = omw.markerInit(dest.lat, dest.lng);
     var mapOptions = {
@@ -104,8 +105,16 @@ $(function() {
 
     // Plot the markers
     recs.forEach(function(rec) {
-      omw.markerInit(rec.location.latitude, rec.location.longitude).setMap(map);
+      var marker = omw.markerInit(rec.location.latitude, rec.location.longitude).setMap(map);
+	  attachText(marker, rec.name + "\n" +rec.formatted_address);
     });
+
+	 function attachText(marker, text) {
+		 google.maps.event.addListener(marker, 'click', function() {
+		   display.setContent(text);
+		   display.open(map, marker);
+		});
+	 }
 
     // Plot the directions
     directionsRenderer.setMap(map);
