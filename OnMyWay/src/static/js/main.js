@@ -26,9 +26,9 @@ $(function() {
       $('#cur-loc').show().attr('title', lat + ',' + lng);
 
       // DELETE ME:
-      var e = document.createEvent('Events');
-      e.initEvent('click', true, false);
-      $('#submit').get()[0].dispatchEvent(e);      
+      // var e = document.createEvent('Events');
+      // e.initEvent('click', true, false);
+      // $('#submit').get()[0].dispatchEvent(e);      
     });
 
     // Attach event handlers
@@ -51,8 +51,8 @@ $(function() {
 
 
     // Testing: DELETE ME
-    $('#to').val('535 west 112th street, new york');
-    $('#onmyway').val('ice cream');
+    // $('#to').val('535 west 112th street, new york');
+    // $('#onmyway').val('ice cream');
     
   };
 
@@ -166,15 +166,14 @@ $(function() {
 
       directionResult.routes[0].legs[1].steps.forEach(function(step) {
         var marker = new google.maps.Marker({
-          position: step.start_point,
-          map: map
+          position: step.start_point
         });
         instructions.push([marker, step.instructions]);
       });
 
       console.log("show directions");
       $('#dir-view').show();
-      $('#dir-content').html(omw.instructions[0]);
+      $('#dir-content').html(omw.instructions[0][1]);
       $('#rarr').click(function(event) {
         incrInstructions(1);
       });
@@ -188,9 +187,13 @@ $(function() {
         if (newCur < 0 || newCur >= omw.instructions.length) {
           return;
         }
-        omw.curDirStep = newCur;
         $('#dir-content').html(omw.instructions[newCur][1]); // set content
-        omw.instructions[newCur][0] //todo pick up here
+        if (step === 1)
+          omw.instructions[newCur][0].setMap(map);
+        else
+          omw.instructions[newCur+1][0].setMap(null);
+        // map.setCenter(omw.instructions[newCur][0].getPosition());
+        omw.curDirStep = newCur;
       }
     } //showSteps
 
