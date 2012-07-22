@@ -26,9 +26,9 @@ $(function() {
       $('#cur-loc').show().attr('title', lat + ',' + lng);
 
       // DELETE ME:
-      var e = document.createEvent('Events');
-      e.initEvent('click', true, false);
-      $('#submit').get()[0].dispatchEvent(e);      
+      // var e = document.createEvent('Events');
+      // e.initEvent('click', true, false);
+      // $('#submit').get()[0].dispatchEvent(e);      
     });
 
     // Attach event handlers
@@ -51,8 +51,8 @@ $(function() {
 
 
     // Testing: DELETE ME
-    $('#to').val('535 west 112th street, new york');
-    $('#onmyway').val('ice cream');
+    // $('#to').val('535 west 112th street, new york');
+    // $('#onmyway').val('ice cream');
     
   };
 
