@@ -36,7 +36,12 @@ $(function() {
       $('#from').show();
     });
 
+
+    // Testing: DELETE ME
+    // $('#to')
+
   };
+
 
   omw.formSubmitHandler = function(event) {
       event.preventDefault(); // Don't actually submit
@@ -49,7 +54,7 @@ $(function() {
       var from = $('#from').val().trim();
       if (!from && !(omw.lat || omw.lng)) {
         alert("Need a origin!");
-        return false;
+        return;
       }
 
       if (from) {
@@ -64,7 +69,7 @@ $(function() {
       $('#loading').show();
       console.log('Submitting form with the following data:');
       console.log(data);
-      $.get('/find', data, omw.resultsHandler, omw.requestErrorHandler);
+      $.get('/find', data, omw.resultsHandler, omw.requestErrorHandler, 'json');
   };
 
   omw.getLoc = function(cb, error) {
@@ -83,81 +88,38 @@ $(function() {
 
 
   omw.resultsHandler = function(data) {
-
-  //   console.log('Received following results');
-  //   console.log(data);
-
-    // var orig = data.results.origin,
-    //   dest = data.results.destination,
-  //     origMarker = omw.markerInit(orig.lat, orig.lng),
-  //     destMarker = omw.markerInit(dest.lat, dest.lng);
-
-  //   var mapOpts =  {
-  //     center: new google.maps.LatLng(41.850033, -87.6500523)
-  //     // zoom: 8,
-  //     // mapTypeId: google.maps.MapTypeId.HYBRID,
-  //     // disableDefaultUI: true,
-  //     // scrollwheel: false,
-  //     // zoomControl: false,
-  //     // panControl: false,
-  //     // disableDoubleClickZoom: true,
-  //     // draggable: false
-  //   };
-  //   /*{
-  //     mapTypeId: google.maps.MapTypeId.ROADMAP
-  //   };*/
-
-    // // Draw the preliminary map
-  //   console.log('lsjlk');
-  //   var map = new google.maps.Map($('#map-canvas').get(), mapOpts);
-  //  //  omw.dirRenderer.setMap(map);
-
-  //  //  var origLatLng = new google.maps.LatLng(orig.lat, orig.lng);
-  //  //  var destLatLng = new google.maps.LatLng(dest.lat, dest.lng);
-  //  //  // console.log(origLatLng);
-  //  //  // console.log(destLatLng);
-  //  //  var dirRequest = {
-  //  //    origin: new google.maps.LatLng(orig.lat, orig.lng),
-  //  //    destination: new google.maps.LatLng(dest.lat, dest.lng),
-  //  //    travelMode: google.maps.TravelMode.DRIVING
-  //  //  };
-  //  //  console.log(dirRequest);
-  //  //  omw.dirService.route(dirRequest, function(result, status) {
-  //  //    console.log("this seems to be the problem");
-  //  //    if (status == google.maps.DirectionsStatus.OK) {
-    //  //  dirRenderer.setDirections(result);
-    //  // } else {
-    //  //   console.log("Directions request with status:");
-    //  //   console.log(status);
-    //  // }
-  //  //  });
+    console.log(typeof data);
 
     var directionsRenderer = omw.directionsRenderer,
-      orig = data.results.origin,
-      dest = data.results.destination,
+      orig = data.origin,
+      dest = data.destination,
+		  recs = data.recommendations,
       origMarker = omw.markerInit(orig.lat, orig.lng),
       destMarker = omw.markerInit(dest.lat, dest.lng);
-
     var mapOptions = {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
     var map = new google.maps.Map($('#map-canvas').get()[0], mapOptions);
-    directionsRenderer.setMap(map);
 
+    // Plot the markers
+    recs.forEach(function(rec) {
+      ohm.markerInit(rec.lat, rec.lng).setMap(map);
+    });
+
+    // Plot the directions
+    directionsRenderer.setMap(map);
     var request = {
       origin: new google.maps.LatLng(orig.lat, orig.lng),
       destination: new google.maps.LatLng(dest.lat, dest.lng),
       travelMode: google.maps.TravelMode.DRIVING
     };
-
     omw.directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
       }
-
     });
 
+    // UI magic
     $('#loading').hide();
     $('#home').hide();
     $('#results').show();
@@ -165,40 +127,40 @@ $(function() {
 
 
   // Kick things off
-  // omw.init();
-  omw.resultsHandler({
-    results: {
-      origin: {
-        lat: 40.80510,
-        lng: -73.96487
-      },
-      destination: {
-        lat: 40.75377,
-        lng: -73.97855  
-      },
-      recommendations: [
-        {
-          lat: 40.77176,
-          lng: -73.97529 
-        },
-        {
-          lat: 40.76903,
-          lng: -73.97031
-        },
-        {
-          lat: 40.79935,
-          lng: -73.97146
-        },
-        {
-          lat: 40.78010,
-          lng: -73.96956
-        },
-        {
-          lat: 40.79176,
-          lng: -73.97825
-        }
-      ]
-    }
-  });
+  omw.init();
+  // omw.resultsHandler({
+  //   results: {
+  //     origin: {
+  //       lat: 40.80510,
+  //       lng: -73.96487
+  //     },
+  //     destination: {
+  //       lat: 40.75377,
+  //       lng: -73.97855  
+  //     },
+  //     recommendations: [
+  //       {
+  //         lat: 40.77176,
+  //         lng: -73.97529 
+  //       },
+  //       {
+  //         lat: 40.76903,
+  //         lng: -73.97031
+  //       },
+  //       {
+  //         lat: 40.79935,
+  //         lng: -73.97146
+  //       },
+  //       {
+  //         lat: 40.78010,
+  //         lng: -73.96956
+  //       },
+  //       {
+  //         lat: 40.79176,
+  //         lng: -73.97825
+  //       }
+  //     ]
+  //   }
+  // });
 
 });
