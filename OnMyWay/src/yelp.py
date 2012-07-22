@@ -7,18 +7,13 @@ from params import YelpParams
 
 PATH = 'api.yelp.com/v2/search'
 
-def yelp(self, current_location, location, keyword):
+def yelp(self, ll, keyword):
     
     url_params = {}
-    url_params['limit'] = 1
-    url_params['sort'] = 2
+    url_params['limit'] = 4
+    url_params['sort'] = 1
 
-    if location:
-        url_params['location'] = location
-        logging.info(location)
-    else:
-        url_params['ll'] = current_location
-        logging.info("ll")
+    url_params['ll'] = ll
     url_params['term'] = keyword
     """Returns response for API request."""
     # Unsigned URL
@@ -50,11 +45,12 @@ def yelp(self, current_location, location, keyword):
     except urllib2.HTTPError, error:
         response = json.loads(error.read())
         logging.info(response)
+    top = sorted(response['businesses'], key=lambda k: k['rating'], reverse=True)[0]
     results = {}
-    top = response['businesses'][0]
     results['name'] = top['name']
     results['formatted_location'] = ', '.join(top['location']['address'])
     latitude = top['location']['coordinate']['latitude']
     longitude = top['location']['coordinate']['longitude']
     results['location'] = {'latitude': latitude, 'longitude':longitude}
+    results['rating'] = top['rating']
     return results

@@ -28,10 +28,9 @@ class MainHandler(webapp2.RequestHandler):
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
 
-        current_location = ''
-        location = '6209 robinwood rd, bethesda maryland'
+        lat = '37.788022,-122.399797'
         term = 'ice cream'
-        answer = yelp(self, current_location, location, term)
+        answer = yelp(self, lat, term)
         self.response.out.write(answer)
         
 app = webapp2.WSGIApplication([('/', MainHandler)],
