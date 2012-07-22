@@ -36,15 +36,6 @@ class MainHandler(webapp2.RequestHandler):
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
 
-        # Do a YELP API call
-        # answer = self.yelp(HOST, PATH, url_params, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
-        # self.response.out.write(answer)
-
-        # Do a Google Maps API call
-        # logging.info(maps.geocode(address='Starbucks 02142', sensor='false'))
-        # logging.info(maps.places(query='Starbucks 02142',sensor='false'))
-
-
 class RPCHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -106,8 +97,6 @@ class RPCHandler(webapp2.RequestHandler):
         x = self.request.get('x')
         y = self.request.get('y')
         return {'sum': x + y}
-
-
 
 app = webapp2.WSGIApplication([('/', MainHandler),
                                ('/find', RPCHandler)],
