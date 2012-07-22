@@ -54,7 +54,7 @@ class RPCHandler(webapp2.RequestHandler):
     def on_my_way(self):
         if DEBUG:
             recommendations = [{'id': u'starbucks-new-york-162', 'rating': 3.5, 'formatted_address': u'684 8th Ave', 'name': u'Starbucks', 'location': {'latitude': 40.7581085, 'longitude': -73.9891272}}, {'id': u'macaron-cafe-new-york-3', 'rating': 4.0, 'formatted_address': u'161 West 36 St.', 'name': u'Macaron Cafe', 'location': {'latitude': 40.7520263, 'longitude': -73.9890469}}, {'id': u'stumptown-coffee-roasters-new-york', 'rating': 4.5, 'formatted_address': u'The Ace Hotel, 20 W 29th St', 'name': u'Stumptown Coffee Roasters', 'location': {'latitude': 40.7456025, 'longitude': -73.9878759}}, {'id': u'71-irving-place-coffee-and-tea-bar-new-york', 'rating': 3.5, 'formatted_address': u'71 Irving Pl', 'name': u'71 Irving Place Coffee & Tea Bar', 'location': {'latitude': 40.736833, 'longitude': -73.987026}}, {'id': u'mud-new-york-3', 'rating': 4.0, 'formatted_address': u'307 E 9th St', 'name': u'MUD', 'location': {'latitude': 40.7290302, 'longitude': -73.986652}}]
-            return {'recommendations': recommendations}
+            return {'recommendations': recommendations, 'origin': {u'lat': 40.758362, u'lng': -73.98915}, 'destination': {u'lat': 40.722309, u'lng': -73.987303}}
 
         points = []
         query = self.request.get('query')
@@ -89,6 +89,7 @@ class RPCHandler(webapp2.RequestHandler):
                 point_location = place['location']
 
             end_locations.append(point_location)
+        logging.info({'origin': end_locations[0], 'destination': end_locations[1]})
 
         logging.info('Origin Point: %s', end_locations[0])
         logging.info('Destination Point: %s', end_locations[1])
@@ -96,7 +97,8 @@ class RPCHandler(webapp2.RequestHandler):
                                                        end_locations[1])
         recommendations = yelp_recommendation(query, search_locations)
         logging.info(recommendations)
-        return {'recommendations': recommendations}
+        return {'recommendations': recommendations, 'origin': end_locations[0],
+                'destination': end_locations[1]}
 
     def add(self):
         x = self.request.get('x')
