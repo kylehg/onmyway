@@ -8,6 +8,16 @@ from params import YelpParams
 PATH = 'api.yelp.com/v2/search'
 
 def yelp_recommendation(keyword, stops):
+    """Given a keyword and list of locations, find close, top-rated stop near each location
+
+    Args:
+    keyword: the term to search for
+    stops: list of dictionaries with latitude and longitude
+
+    Returns:
+    A list of dictionaries with the structure of the method below.
+    """
+
     locations = []
     for stop in stops:
         coord = str(stop['lat']) + ", " + str(stop['lng'])
@@ -18,13 +28,29 @@ def yelp_recommendation(keyword, stops):
 
 def find_stop(ll, keyword):
     
+    """Given a latitude and longitude and keyword, finds a store nearby.
+
+    Args:
+    ll: latitude, longitude
+    keyword: term to search for
+
+    Returns:
+    A dictionary with the following structure:
+    {'formatted_address': The address of the location,
+    'name':name of store,
+    'id': Yelp id of store,
+    'rating': Yelp rating of store
+    'location': {'lat': latitude coordinate, 
+                'lng': longitude coordate}
+    }
+    """
     url_params = {}
     url_params['limit'] = 4
     url_params['sort'] = 1
 
     url_params['ll'] = ll
     url_params['term'] = keyword
-    """Returns response for API request."""
+
     # Unsigned URL
     encoded_params = ''
     if url_params:
@@ -54,6 +80,8 @@ def find_stop(ll, keyword):
     except urllib2.HTTPError, error:
         response = json.loads(error.read())
         logging.info(response)
+
+    #Parse the response 
     top = sorted(response['businesses'], key=lambda k: k['rating'], reverse=True)[0]
     results = {}
     results['name'] = top['name']
