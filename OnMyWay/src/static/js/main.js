@@ -140,6 +140,7 @@ $(function() {
           omw.directionsService.route(request, function(result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               directionsRenderer.setDirections(result);
+			  showSteps(result);
             } else {
               console.log("Soemthing went wrong " + status);
             }
@@ -148,7 +149,19 @@ $(function() {
       });
     }; //attachText
 
-  
+	  function showSteps(directionResult) {
+		  var instructions = [];
+		  var myRoute = directionResult.routes[0].legs[0];
+		  for (var i = 0; i < myRoute.steps.length; i++) {
+	        var marker = new google.maps.Marker({
+			 position: myRoute.steps[i].start_point,
+             map: map
+             });
+             instructions.push(myRoute.steps[i].instructions);
+           }
+       }
+	  
+	  
     // Plot the markers
     omw.markerArray = [];
     recs.forEach(function(rec) {
@@ -179,7 +192,7 @@ $(function() {
     $('#loading').hide();
     $('#home').hide();
     $('#results').show();
-    $('#map-canvas').height($(window).height() - 80)
+    $('#map-canvas').height($(window).height() - 80);
   };
 
 
