@@ -160,14 +160,16 @@ $(function() {
           map: map
         });
         instructions.push([marker, step.instructions]);
-      }
+      });
+
       directionResult.routes[0].legs[1].steps.forEach(function(step) {
         var marker = new google.maps.Marker({
           position: step.start_point,
           map: map
         });
         instructions.push([marker, step.instructions]);
-      }
+      });
+
       console.log("show directions");
       $('#dir-view').show();
       $('#dir-content').html(omw.instructions[0]);
@@ -189,7 +191,7 @@ $(function() {
         omw.instructions[newCur][0] //todo pick up here
       }
     } //showSteps
-	  
+
 	  
     // Plot the markers
     omw.markerArray = [];
