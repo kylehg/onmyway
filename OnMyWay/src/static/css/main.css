@@ -76,6 +76,10 @@ body {
   text-align: center; }
   #results #sm-logo img {
     height: 60px; }
+#results #map-view {
+  padding: 10px; }
+#results #map-canvas {
+  min-height: 400px; }
 
 #loading {
   display: none;
