@@ -12,7 +12,7 @@ $(function() {
     dest: null,
     directionsService: new google.maps.DirectionsService(),
     directionsRenderer: new google.maps.DirectionsRenderer(),
-	stepDisplay: new google.maps.InfoWindow()
+    stepDisplay: new google.maps.InfoWindow()
   };
 
   omw.init = function() {
@@ -94,8 +94,8 @@ $(function() {
     var directionsRenderer = omw.directionsRenderer,
       orig = data.origin,
       dest = data.destination,
-	  display = omw.stepDisplay,
-	  recs = data.recommendations,
+      display = omw.stepDisplay,
+      recs = data.recommendations,
       origMarker = omw.markerInit(orig.lat, orig.lng),
       destMarker = omw.markerInit(dest.lat, dest.lng);
     var mapOptions = {
@@ -103,19 +103,51 @@ $(function() {
     };
     var map = new google.maps.Map($('#map-canvas').get()[0], mapOptions);
 
-	var attachText = function(display, marker, text) {
-		google.maps.event.addListener(marker, 'click', function() {
-		   display.setContent(text);
-		   display.open(map, marker);
-		});
-	 };
+    var attachText = function(display, marker, text) {
+      google.maps.event.addListener(marker, 'click', function() {
+        display.setContent(text);
+        display.open(map, marker);
+        $(".button").click(function(){
+          for (var mark in omw.markerArray) {
+            omw.markerArray[mark].setMap(null);
+          }
+          omw.markerArray = [];
+//          var marker = omw.markerInit($(this).attr("data-lat"), $(this).attr("data-lng"));
+//          omw.markerArray.push(marker);
+//          marker.setMap(map);
+          directionsRenderer.setMap(map);
+          var request = {  
+            origin: new google.maps.LatLng(orig.lat, orig.lng),
+			waypoints: [{
+				location: new google.maps.LatLng($(this).attr("data-lat"),$(this).attr("data-lng")),
+				stopover:true
+			}],
+            destination: new google.maps.LatLng(dest.lat, dest.lng),
+            travelMode: google.maps.TravelMode.DRIVING
+          };
+
+          omw.directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              directionsRenderer.setDirections(result);
+            } else {
+              console.log("Soemthing went wrong " + status);
+            }
+          });
+        });
+      });
+    }; //attachText
+
   
     // Plot the markers
+    omw.markerArray = [];
     recs.forEach(function(rec) {
       var marker = omw.markerInit(rec.location.latitude, rec.location.longitude);
-	  marker.setMap(map);
-	  attachText(display, marker, "<div class='name'>"+rec.name +"</div><div class='address'>" + rec.formatted_address + "</div><div class ='rating'>Yelp Rating: " + rec.rating + "</div>");
+      omw.markerArray.push(marker);
+      marker.setMap(map);
+      var text = "<div class='name'>"+rec.name +"</div><div class='address'>" + rec.formatted_address + "</div><div class ='rating'>Yelp Rating: " + rec.rating + "</div>" + "<button data-lat='" + rec.location.latitude + "' data-lng='" + rec.location.longitude + "' type='submit' class='button' >Select This</button>";
+      attachText(display, marker, text);
     });
+
 
     // Plot the directions
     directionsRenderer.setMap(map);
