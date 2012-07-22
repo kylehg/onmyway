@@ -55,10 +55,10 @@ class RPCHandler(webapp2.RequestHandler):
         query = self.request.get('query')
         for prefix in ['origin', 'destination']:
             point = {}
-            lat = float(self.request.get(prefix + '_lat'))
-            lng = float(self.request.get(prefix + '_lng'))
+            lat = self.request.get(prefix + '_lat')
+            lng = self.request.get(prefix + '_lng')
             if lat and lng:
-                point['location'] = {'lat':lat, 'lng':lng}
+                point['location'] = {'lat':float(lat), 'lng':float(lng)}
             point['text'] = self.request.get(prefix + '_text')
             points.append(point)
 

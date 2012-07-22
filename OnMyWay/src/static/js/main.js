@@ -58,12 +58,14 @@ $(function() {
       if (omw.lat && omw.lng) {
 				data['origin_lat'] = omw.lat;
 				data['origin_lng'] = omw.lng;
-			} 
+			}
+
+      data['method'] = 'onmyway';
 
       $('#loading').show();
       console.log('Submitting form with the following data:');
       console.log(data);
-      $.get('/findway', data, omw.resultsHandler, omw.requestErrorHandler);
+      $.get('/find', data, omw.resultsHandler, omw.requestErrorHandler);
   };
 
   omw.getLoc = function(cb, error) {
