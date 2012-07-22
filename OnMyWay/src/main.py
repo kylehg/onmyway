@@ -16,7 +16,7 @@
 #
 import webapp2
 import os
-from yelp import yelp
+from yelp import yelp_recommendation
 from google.appengine.ext.webapp import template
 
 TEMPLATES_DIR = 'templates'
@@ -28,10 +28,7 @@ class MainHandler(webapp2.RequestHandler):
         index_template = template.render(index_file, {})
         self.response.out.write(index_template)
 
-        lat = '37.788022,-122.399797'
-        term = 'ice cream'
-        answer = yelp(self, lat, term)
-        self.response.out.write(answer)
+        locations = yelp_recommendation("ice cream", [{}])
         
 app = webapp2.WSGIApplication([('/', MainHandler)],
                               debug=True)

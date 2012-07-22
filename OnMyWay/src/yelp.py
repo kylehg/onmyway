@@ -7,7 +7,16 @@ from params import YelpParams
 
 PATH = 'api.yelp.com/v2/search'
 
-def yelp(self, ll, keyword):
+def yelp_recommendation(self, keyword, stops):
+    locations = []
+    for stop in stops:
+        coord = str(stop['lat']) + ", " + str(stop['lng'])
+        answer = find_stop(self, coord, keyword)
+        if not answer['id'] in [stop['id'] for stop in stops]:
+            locations.append(answer)
+    return locations
+
+def find_stop(self, ll, keyword):
     
     url_params = {}
     url_params['limit'] = 4
@@ -53,4 +62,5 @@ def yelp(self, ll, keyword):
     longitude = top['location']['coordinate']['longitude']
     results['location'] = {'latitude': latitude, 'longitude':longitude}
     results['rating'] = top['rating']
+    results['id'] = top['id']
     return results
