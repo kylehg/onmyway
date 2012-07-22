@@ -10,8 +10,8 @@ $(function() {
 		lng: null,
 		orig: null,
 		dest: null,
-		dirService: new google.maps.DirectionsService(),
-		dirRenderer: new google.maps.DirectionsRenderer()
+		directionsService: new google.maps.DirectionsService(),
+		directionsRenderer: new google.maps.DirectionsRenderer()
 	};
 
   omw.init = function() {
@@ -42,7 +42,8 @@ $(function() {
       event.preventDefault(); // Don't actually submit
       var data = {
 				'destination_text': $('#to').val(),
-        'query': $('#onmyway').val()
+        'query': $('#onmyway').val(),
+        'method': 'onmyway'
 			};
       
       var from = $('#from').val().trim();
@@ -59,8 +60,6 @@ $(function() {
 				data['origin_lat'] = omw.lat;
 				data['origin_lng'] = omw.lng;
 			}
-
-      data['method'] = 'onmyway';
 
       $('#loading').show();
       console.log('Submitting form with the following data:');
@@ -85,79 +84,121 @@ $(function() {
 
   omw.resultsHandler = function(data) {
 
-    console.log('Received following results');
-    console.log(data);
+  //   console.log('Received following results');
+  //   console.log(data);
 
-		var orig = data.results.origin,
-		  dest = data.results.destination,
+		// var orig = data.results.origin,
+		//   dest = data.results.destination,
+  //     origMarker = omw.markerInit(orig.lat, orig.lng),
+  //     destMarker = omw.markerInit(dest.lat, dest.lng);
+
+  //   var mapOpts =  {
+  //     center: new google.maps.LatLng(41.850033, -87.6500523)
+  //     // zoom: 8,
+  //     // mapTypeId: google.maps.MapTypeId.HYBRID,
+  //     // disableDefaultUI: true,
+  //     // scrollwheel: false,
+  //     // zoomControl: false,
+  //     // panControl: false,
+  //     // disableDoubleClickZoom: true,
+  //     // draggable: false
+  //   };
+  //   /*{
+  //     mapTypeId: google.maps.MapTypeId.ROADMAP
+  //   };*/
+
+		// // Draw the preliminary map
+  //   console.log('lsjlk');
+  //   var map = new google.maps.Map($('#map-canvas').get(), mapOpts);
+  //  //  omw.dirRenderer.setMap(map);
+
+  //  //  var origLatLng = new google.maps.LatLng(orig.lat, orig.lng);
+  //  //  var destLatLng = new google.maps.LatLng(dest.lat, dest.lng);
+  //  //  // console.log(origLatLng);
+  //  //  // console.log(destLatLng);
+  //  //  var dirRequest = {
+  //  //    origin: new google.maps.LatLng(orig.lat, orig.lng),
+  //  //    destination: new google.maps.LatLng(dest.lat, dest.lng),
+  //  //    travelMode: google.maps.TravelMode.DRIVING
+  //  //  };
+  //  //  console.log(dirRequest);
+  //  //  omw.dirService.route(dirRequest, function(result, status) {
+  //  //    console.log("this seems to be the problem");
+  //  //    if (status == google.maps.DirectionsStatus.OK) {
+		// 	// 	dirRenderer.setDirections(result);
+		// 	// } else {
+		// 	// 	 console.log("Directions request with status:");
+		// 	// 	 console.log(status);
+		// 	// }
+  //  //  });
+
+    var directionsRenderer = omw.directionsRenderer,
+      orig = data.results.origin,
+      dest = data.results.destination,
       origMarker = omw.markerInit(orig.lat, orig.lng),
       destMarker = omw.markerInit(dest.lat, dest.lng);
 
-    var mapOpts = {
+    var mapOptions = {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-		// Draw the preliminary map
-    var map = new google.maps.Map($('#map-canvas').get(), mapOpts);
-    omw.dirRenderer.setMap(map);
+    var map = new google.maps.Map($('#map-canvas').get()[0], mapOptions);
+    directionsRenderer.setMap(map);
 
-    var dirRequest = {
+    var request = {
       origin: new google.maps.LatLng(orig.lat, orig.lng),
       destination: new google.maps.LatLng(dest.lat, dest.lng),
       travelMode: google.maps.TravelMode.DRIVING
     };
 
-    omw.dirService.route(dirRequest, function(result, status) {
-      console.log("this seems to be the problem");
+    omw.directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
-				dirRenderer.setDirections(result);
-			} else {
-				 console.log("Directions request with status:");
-				 console.log(status);
-			}
+        directionsRenderer.setDirections(result);
+      }
+
     });
 
-		$('#loading').hide();
+    $('#loading').hide();
     $('#home').hide();
     $('#results').show();
 	};
 
 
   // Kick things off
-  omw.init();
-  // omw.resultsHandler({
-  //   results: {
-  //     origin: {
-  //       lat: 40.80510,
-  //       lng: -73.96487
-  //     },
-  //     destination: {
-  //       lat: 40.75377,
-  //       lng: -73.97855  
-  //     },
-  //     recommendations: [
-  //       {
-  //         lat: 40.77176,
-  //         lng: -73.97529 
-  //       },
-  //       {
-  //         lat: 40.76903,
-  //         lng: -73.97031
-  //       },
-  //       {
-  //         lat: 40.79935,
-  //         lng: -73.97146
-  //       },
-  //       {
-  //         lat: 40.78010,
-  //         lng: -73.96956
-  //       },
-  //       {
-  //         lat: 40.79176,
-  //         lng: -73.97825
-  //       }
-  //     ]
-  //   }
-  // });
+  // omw.init();
+  omw.resultsHandler({
+    results: {
+      origin: {
+        lat: 40.80510,
+        lng: -73.96487
+      },
+      destination: {
+        lat: 40.75377,
+        lng: -73.97855  
+      },
+      recommendations: [
+        {
+          lat: 40.77176,
+          lng: -73.97529 
+        },
+        {
+          lat: 40.76903,
+          lng: -73.97031
+        },
+        {
+          lat: 40.79935,
+          lng: -73.97146
+        },
+        {
+          lat: 40.78010,
+          lng: -73.96956
+        },
+        {
+          lat: 40.79176,
+          lng: -73.97825
+        }
+      ]
+    }
+  });
 
 });
