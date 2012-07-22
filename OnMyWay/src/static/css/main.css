@@ -48,6 +48,25 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+@import url(http://fonts.googleapis.com/css?family=Boogaloo);
+.yellow-box, #home #cur-loc, #home .input-wrap.submit a {
+  background-color: #f0e99c;
+  background-image: -webkit-linear-gradient(top, #f0e99c, #f8e93b);
+  /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image: -moz-linear-gradient(top, #f0e99c, #f8e93b);
+  /* Firefox 3.6-15 */
+  background-image: -o-linear-gradient(top, #f0e99c, #f8e93b);
+  /* Opera 11.10+ */
+  background-image: linear-gradient(to bottom, #f0e99c, #f8e93b);
+  /* Firefox 16+ */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); }
+
+.yellow-box:hover, #home #cur-loc:hover, #home .input-wrap.submit a:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); }
+
+.yellow-box:active, #home #cur-loc:active, #home .input-wrap.submit a:active {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3) inset; }
+
 body {
   font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
@@ -67,9 +86,11 @@ body {
   font-size: 24px;
   line-height: 28px; }
 #home input[type="text"] {
-  width: 98%; }
+  width: 98%;
+  border-radius: 5px; }
 #home #cur-loc {
-  display: none; }
+  display: none;
+  padding: 3px; }
 #home .input-wrap.submit {
   border: 1px solid red;
   background: transparent url("/static/img/road.png") repeat-x center left;
@@ -92,16 +113,7 @@ body {
     height: 30px;
     color: black;
     text-decoration: none;
-    font: bold 18px "Comic Sans MS", cursive;
-    background-color: #f0e99c;
-    background-image: -webkit-linear-gradient(top, #f0e99c, #f8e93b);
-    /* Chrome 10+, Saf5.1+, iOS 5+ */
-    background-image: -moz-linear-gradient(top, #f0e99c, #f8e93b);
-    /* Firefox 3.6-15 */
-    background-image: -o-linear-gradient(top, #f0e99c, #f8e93b);
-    /* Opera 11.10+ */
-    background-image: linear-gradient(to bottom, #f0e99c, #f8e93b);
-    /* Firefox 16+ */ }
+    font: bold 18px Boogaloo, "Comic Sans MS", cursive; }
 
 #results #sm-logo {
   display: inline-block;
