@@ -158,8 +158,7 @@ $(function() {
 		  var instructions = omw.instructions = [];
       directionResult.routes[0].legs[0].steps.forEach(function(step) {
         var marker = new google.maps.Marker({
-          position: step.start_point,
-          map: map
+          position: step.start_point
         });
         instructions.push([marker, step.instructions]);
       });
