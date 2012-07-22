@@ -23,10 +23,10 @@ import urllib
 import urllib2
 import webapp2
 
+from yelp import yelp_recommendation
 from google.appengine.ext.webapp import template
 
 TEMPLATES_DIR = 'templates'
-
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -42,7 +42,7 @@ class MainHandler(webapp2.RequestHandler):
 
         # Do a Google Maps API call
         # logging.info(maps.geocode(address='Starbucks 02142', sensor='false'))
-        logging.info(maps.places(query='Starbucks 02142',sensor='false'))
+        # logging.info(maps.places(query='Starbucks 02142',sensor='false'))
 
 
 class RPCHandler(webapp2.RequestHandler):
@@ -98,14 +98,16 @@ class RPCHandler(webapp2.RequestHandler):
         logging.info('Destination Point: %s', end_locations[1])
         search_locations = maps.intermediate_locations(end_locations[0],
                                                        end_locations[1])
-        logging.info('yelp.recommendations(%s, %s)', query, search_locations)
-        return {}
-        # yelp.recommendations(query, search_locations)
+        recommendations = yelp_recommendation(query, search_locations)
+        logging.info(recommendations)
+        return {'recommendations': recommendations}
 
     def add(self):
         x = self.request.get('x')
         y = self.request.get('y')
         return {'sum': x + y}
+
+
 
 app = webapp2.WSGIApplication([('/', MainHandler),
                                ('/find', RPCHandler)],

@@ -51,3 +51,16 @@ table {
 body {
   font: 12px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222; }
+
+#cur-loc {
+  display: none; }
+
+#loading {
+  display: none;
+  /* Only show with JS */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8); }

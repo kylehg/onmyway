@@ -12,3 +12,10 @@ class MapParams(object):
     # Latitude / Longitude Increment Amounts for Intermediate Waypoints
     WAYPOINT_INCREMENTS = .003
     MAX_INTERMEDIATE_WAYPOINTS = 5
+
+class YelpParams(object):
+    #Authentication for Yelp
+    YELP_CONSUMER_KEY = '83MKEDpPxnNnaYXUPBKmxw'
+    YELP_CONSUMER_SECRET = '6Shbk8HTNmX6a8mmDFa7gNWm4ko'
+    YELP_TOKEN = 'oUjGEtvAmpA7XJWFf627_-bxYcCQqETd'
+    YELP_TOKEN_SECRET = 'GNX66S0xKzGP4BYGkYIXrT2sG8E'
