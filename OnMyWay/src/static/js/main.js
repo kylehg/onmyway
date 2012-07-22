@@ -23,6 +23,11 @@ $(function() {
       $('#loading-loc').hide();
       $('#from').hide();
       $('#cur-loc').show().attr('title', lat + ',' + lng);
+
+      // DELETE ME:
+      // var e = document.createEvent('Events');
+      // e.initEvent('click', true, false);
+      // $('#submit').get()[0].dispatchEvent(e);      
     });
 
     // Attach event handlers
@@ -37,11 +42,17 @@ $(function() {
       $('#from').show();
     });
 
+    // Go back to the home page
+    $('#back-btn').click(function(event) {
+      $('#results').hide();
+      $('#home').show();
+    });
+
 
     // Testing: DELETE ME
     $('#to').val('535 west 112th street, new york');
     $('#onmyway').val('ice cream');
-
+    
   };
 
 
@@ -168,6 +179,7 @@ $(function() {
     $('#loading').hide();
     $('#home').hide();
     $('#results').show();
+    $('#map-canvas').height($(window).height() - 80)
   };
 
 
