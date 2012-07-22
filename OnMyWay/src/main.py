@@ -27,6 +27,7 @@ from yelp import yelp_recommendation
 from google.appengine.ext.webapp import template
 
 TEMPLATES_DIR = 'templates'
+DEBUG = True
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -51,6 +52,10 @@ class RPCHandler(webapp2.RequestHandler):
         self.response.out.write(json.dumps(response))
 
     def on_my_way(self):
+        if DEBUG:
+            recommendations = [{'id': u'starbucks-new-york-162', 'rating': 3.5, 'formatted_address': u'684 8th Ave', 'name': u'Starbucks', 'location': {'latitude': 40.7581085, 'longitude': -73.9891272}}, {'id': u'macaron-cafe-new-york-3', 'rating': 4.0, 'formatted_address': u'161 West 36 St.', 'name': u'Macaron Cafe', 'location': {'latitude': 40.7520263, 'longitude': -73.9890469}}, {'id': u'stumptown-coffee-roasters-new-york', 'rating': 4.5, 'formatted_address': u'The Ace Hotel, 20 W 29th St', 'name': u'Stumptown Coffee Roasters', 'location': {'latitude': 40.7456025, 'longitude': -73.9878759}}, {'id': u'71-irving-place-coffee-and-tea-bar-new-york', 'rating': 3.5, 'formatted_address': u'71 Irving Pl', 'name': u'71 Irving Place Coffee & Tea Bar', 'location': {'latitude': 40.736833, 'longitude': -73.987026}}, {'id': u'mud-new-york-3', 'rating': 4.0, 'formatted_address': u'307 E 9th St', 'name': u'MUD', 'location': {'latitude': 40.7290302, 'longitude': -73.986652}}]
+            return {'recommendations': recommendations}
+
         points = []
         query = self.request.get('query')
         for prefix in ['origin', 'destination']:

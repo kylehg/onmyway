@@ -6,6 +6,7 @@ import urllib
 
 from params import MapParams
 
+
 def geocode(address, sensor, **geo_args):
     """Given an address find geographic coordinates.
 

@@ -57,7 +57,7 @@ def find_stop(ll, keyword):
     top = sorted(response['businesses'], key=lambda k: k['rating'], reverse=True)[0]
     results = {}
     results['name'] = top['name']
-    results['formatted_location'] = ', '.join(top['location']['address'])
+    results['formatted_address'] = ', '.join(top['location']['address'])
     latitude = top['location']['coordinate']['latitude']
     longitude = top['location']['coordinate']['longitude']
     results['location'] = {'latitude': latitude, 'longitude':longitude}
