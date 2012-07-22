@@ -22,7 +22,7 @@ class YelpParamsKyle(object):
 
 class YelpParams(object):
     # OAuth2 Authentication Params for Yelp
-    YELP_CONSUMER_KEY = 'yDbF4bpNdDWW2clY7VnXHw'
-    YELP_CONSUMER_SECRET = 'L4jLP4q3kUrcwCJzfHKffAWGi0I'
-    YELP_TOKEN = 'SS4UfObtS8d8E6BYsDHNlsc0ZjGsNjWt'
-    YELP_TOKEN_SECRET = '-U1arPRU3EpSCPAuETyU3MxC_zA'
+    YELP_CONSUMER_KEY = 'q6EDuUKX7VHFQ4yWar_vHQ'
+    YELP_CONSUMER_SECRET = 'PXUxWyX5R73PThVeNSmrgvCInkM'
+    YELP_TOKEN = 'kowNVsbJEeidTefEwFUzVb6i0WnVzmnv'
+    YELP_TOKEN_SECRET = 'mffJkuxDMU0v5jRVqSsPJBN3ko4'

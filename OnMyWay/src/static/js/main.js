@@ -25,9 +25,9 @@ $(function() {
       $('#cur-loc').show().attr('title', lat + ',' + lng);
 
       // DELETE ME:
-      var e = document.createEvent('Events');
-      e.initEvent('click', true, false);
-      $('#submit').get()[0].dispatchEvent(e);      
+      // var e = document.createEvent('Events');
+      // e.initEvent('click', true, false);
+      // $('#submit').get()[0].dispatchEvent(e);      
     });
 
     // Attach event handlers
@@ -40,6 +40,12 @@ $(function() {
     $('#cur-loc a').click(function(event) {
       $(this).parent().hide();
       $('#from').show();
+    });
+
+    // Go back to the home page
+    $('#back-btn').click(function(event) {
+      $('#results').hide();
+      $('#home').show();
     });
 
 
