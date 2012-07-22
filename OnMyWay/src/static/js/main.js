@@ -12,7 +12,8 @@ $(function() {
     dest: null,
     directionsService: new google.maps.DirectionsService(),
     directionsRenderer: new google.maps.DirectionsRenderer(),
-    stepDisplay: new google.maps.InfoWindow()
+    stepDisplay: new google.maps.InfoWindow(),
+    curDirStep: 0
   };
 
   omw.init = function() {
@@ -25,9 +26,9 @@ $(function() {
       $('#cur-loc').show().attr('title', lat + ',' + lng);
 
       // DELETE ME:
-      // var e = document.createEvent('Events');
-      // e.initEvent('click', true, false);
-      // $('#submit').get()[0].dispatchEvent(e);      
+      var e = document.createEvent('Events');
+      e.initEvent('click', true, false);
+      $('#submit').get()[0].dispatchEvent(e);      
     });
 
     // Attach event handlers
@@ -118,7 +119,8 @@ $(function() {
       google.maps.event.addListener(marker, 'click', function() {
         display.setContent(text);
         display.open(map, marker);
-        $(".button").click(function(){
+        $(".button-call").click(function() {
+          console.log("worked!");
           for (var mark in omw.markerArray) {
             omw.markerArray[mark].setMap(null);
           }
@@ -129,10 +131,11 @@ $(function() {
           directionsRenderer.setMap(map);
           var request = {  
             origin: new google.maps.LatLng(orig.lat, orig.lng),
-			waypoints: [{
-				location: new google.maps.LatLng($(this).attr("data-lat"),$(this).attr("data-lng")),
-				stopover:true
-			}],
+      			waypoints: [{
+      				location: new google.maps.LatLng($(this).attr("data-lat"),
+                  $(this).attr("data-lng")),
+      				stopover: true
+      			}],
             destination: new google.maps.LatLng(dest.lat, dest.lng),
             travelMode: google.maps.TravelMode.DRIVING
           };
@@ -140,7 +143,7 @@ $(function() {
           omw.directionsService.route(request, function(result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               directionsRenderer.setDirections(result);
-			  showSteps(result);
+      			  showSteps(result);
             } else {
               console.log("Soemthing went wrong " + status);
             }
@@ -150,16 +153,42 @@ $(function() {
     }; //attachText
 
 	  function showSteps(directionResult) {
-		  var instructions = [];
-		  var myRoute = directionResult.routes[0].legs[0];
-		  for (var i = 0; i < myRoute.steps.length; i++) {
-	        var marker = new google.maps.Marker({
-			 position: myRoute.steps[i].start_point,
-             map: map
-             });
-             instructions.push(myRoute.steps[i].instructions);
-           }
-       }
+		  var instructions = omw.instructions = [];
+      directionResult.routes[0].legs[0].steps.forEach(function(step) {
+        var marker = new google.maps.Marker({
+          position: step.start_point,
+          map: map
+        });
+        instructions.push([marker, step.instructions]);
+      }
+      directionResult.routes[0].legs[1].steps.forEach(function(step) {
+        var marker = new google.maps.Marker({
+          position: step.start_point,
+          map: map
+        });
+        instructions.push([marker, step.instructions]);
+      }
+      console.log("show directions");
+      $('#dir-view').show();
+      $('#dir-content').html(omw.instructions[0]);
+      $('#rarr').click(function(event) {
+        incrInstructions(1);
+      });
+      $('#larr').click(function(event) {
+        incrInstructions(-1);
+      });
+
+      function incrInstructions(step) {
+        console.log("incr instructions by" + step);
+        var newCur = omw.curDirStep + step;
+        if (newCur < 0 || newCur >= omw.instructions.length) {
+          return;
+        }
+        omw.curDirStep = newCur;
+        $('#dir-content').html(omw.instructions[newCur][1]); // set content
+        omw.instructions[newCur][0] //todo pick up here
+      }
+    } //showSteps
 	  
 	  
     // Plot the markers
@@ -177,7 +206,7 @@ $(function() {
           rec.rating + " / 5.0</div>" + 
         "<div style='clear:both;text-align:right;padding-top:3px;'><button data-lat='" + 
           rec.location.latitude + "' data-lng='" + rec.location.longitude + 
-          "' type='submit'>Select This</button></div>";
+          "' class='button-call'>Select This</button></div>";
       attachText(display, marker, text);
     });
 

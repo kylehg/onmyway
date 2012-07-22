@@ -166,33 +166,43 @@ body {
   }
 
   #dir-view {
-    background-color: rgba(0,0,0,0.3);
+    display: hidden;
+    background-color: rgba(0,0,0,0.7);
     color: #fff;
-    font-size: 12px;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 5px;
+    padding: 10px 5px;
     height: 60px;
+    font-size: 16px;
+
+    #dir-content {
+      padding-top: 5px;
+    }
 
     .arr {
       width: 15px;
       height: 60px;
       float: right;
+      font: 20px $cursive_font;
+      line-height: 55px;
+      vertical-align: middle;
+      padding: 0 1px 0 3px;
 
       &:hover {
-        background-color: rgba(0,0,0,0.1);
+        background-color: rgba(0,0,0,0.9);
         cursor: pointer;
-        vertical-align: middle;
       }
 
       &#rarr {
         float: right;
+        margin-left: 10px;
       }
 
       &#larr {
         float: left;
+        margin-right: 10px;
       }
     }
   }

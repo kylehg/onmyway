@@ -153,27 +153,35 @@ body {
   #results #map-canvas {
     min-height: 400px; }
   #results #dir-view {
-    background-color: rgba(0, 0, 0, 0.3);
+    display: hidden;
+    background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
-    font-size: 12px;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 5px;
-    height: 60px; }
+    padding: 10px 5px;
+    height: 60px;
+    font-size: 16px; }
+    #results #dir-view #dir-content {
+      padding-top: 5px; }
     #results #dir-view .arr {
       width: 15px;
       height: 60px;
-      float: right; }
+      float: right;
+      font: 20px Boogaloo, "Comic Sans MS", cursive;
+      line-height: 55px;
+      vertical-align: middle;
+      padding: 0 1px 0 3px; }
       #results #dir-view .arr:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        vertical-align: middle; }
+        background-color: rgba(0, 0, 0, 0.9);
+        cursor: pointer; }
       #results #dir-view .arr#rarr {
-        float: right; }
+        float: right;
+        margin-left: 10px; }
       #results #dir-view .arr#larr {
-        float: left; }
+        float: left;
+        margin-right: 10px; }
 
 #loading {
   display: none;
