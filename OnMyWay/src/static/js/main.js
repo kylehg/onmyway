@@ -51,8 +51,8 @@ $(function() {
 
 
     // Testing: DELETE ME
-    // $('#to').val('535 west 112th street, new york');
-    // $('#onmyway').val('ice cream');
+    $('#to').val('200 south 33rd street, philadelphia, pa');
+    $('#onmyway').val('ice cream');
     
   };
 
@@ -110,8 +110,8 @@ $(function() {
       dest = data.destination,
       display = omw.stepDisplay,
       recs = data.recommendations,
-      origMarker = omw.markerInit(orig.lat, orig.lng),
-      destMarker = omw.markerInit(dest.lat, dest.lng);
+      origMarker = omw.markerInit('Origin', orig.lat, orig.lng),
+      destMarker = omw.markerInit('Destination', dest.lat, dest.lng);
     var mapOptions = {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -200,7 +200,8 @@ $(function() {
     // Plot the markers
     omw.markerArray = [];
     recs.forEach(function(rec) {
-      var marker = omw.markerInit(rec.location.latitude, rec.location.longitude);
+      var marker = omw.markerInit(rec.name, rec.location.latitude,
+          rec.location.longitude);
       omw.markerArray.push(marker);
       marker.setMap(map);
       var text = 
