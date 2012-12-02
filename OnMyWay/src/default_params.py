@@ -3,7 +3,7 @@
 class MapParams(object):
     # Application's Google Maps API key. This key identifies your application 
     # for purposes of quota management.
-    API_KEY = 'AIzaSyBSg_HLNGG2RoYolQFnLgge8AxuThfTo-E'
+    API_KEY = ''
 
     # URL Request Addresses
     API_BASE_URL = 'http://maps.googleapis.com/maps/api'
@@ -15,9 +15,8 @@ class MapParams(object):
 
 class YelpParams(object):
     #Authentication for Yelp
-    YELP_CONSUMER_KEY = 'eHr2SL2LJYafgwfwP22NoQ'
-    YELP_CONSUMER_SECRET = 'yKepW4_EPYfeE7dU4viGI1u2LDw'
-    YELP_TOKEN = 'xY2Rf7AH-bM7l6JR2-pd7FjVGQbhzhxE'
-    YELP_TOKEN_SECRET = 'G5UhHftfvWMJ0WzJTyxPhGETnCc'
-
+    YELP_CONSUMER_KEY = ''
+    YELP_CONSUMER_SECRET = ''
+    YELP_TOKEN = ''
+    YELP_TOKEN_SECRET = ''
 
